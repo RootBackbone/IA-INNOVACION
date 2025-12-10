@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentoría - UTP Empleabilidad</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --warning: #f8961e;
+            --info: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, #4361ee, #3a0ca3);
+            --gradient-mentor: linear-gradient(135deg, #4cc9f0, #4895ef);
+            --gradient-student: linear-gradient(135deg, #f8961e, #f3722c);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: var(--radius);
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--white);
+            color: var(--white);
+        }
+
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 25px;
+            padding: 25px 0;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .sidebar-menu i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Mentoría Content */
+        .mentoria-content {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .page-subtitle {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        /* Stats Cards */
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .stat-icon.mentors {
+            background: var(--gradient-mentor);
+        }
+
+        .stat-icon.sessions {
+            background: var(--gradient-student);
+        }
+
+        .stat-icon.rating {
+            background: var(--gradient);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Tabs Navigation */
+        .tabs-navigation {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .tabs-list {
+            display: flex;
+            list-style: none;
+            gap: 10px;
+            border-bottom: 2px solid var(--light);
+            padding-bottom: 15px;
+        }
+
+        .tab-item {
+            padding: 12px 24px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .tab-item.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .tab-item:hover:not(.active) {
+            background: var(--light);
+        }
+
+        /* Mentors Grid */
+        .mentors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .mentor-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary);
+            position: relative;
+        }
+
+        .mentor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .mentor-card.featured::before {
+            content: 'Destacado';
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: var(--warning);
+            color: var(--white);
+            padding: 5px 30px;
+            transform: rotate(45deg);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .mentor-header {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .mentor-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--gradient-mentor);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .mentor-info {
+            flex: 1;
+        }
+
+        .mentor-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .mentor-title {
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .mentor-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .stars {
+            color: var(--warning);
+        }
+
+        .rating-value {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .mentor-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .mentor-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .mentor-description {
+            margin-bottom: 20px;
+            color: var(--dark);
+            line-height: 1.5;
+        }
+
+        .mentor-expertise {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .expertise-tag {
+            background: var(--light);
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: var(--dark);
+        }
+
+        .mentor-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .btn-success:hover {
+            background: #3aa8d0;
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: var(--white);
+        }
+
+        .btn-warning:hover {
+            background: #e07c0c;
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--dark);
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+
+        /* Sessions Section */
+        .sessions-section {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sessions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .session-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: var(--light);
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+        }
+
+        .session-item:hover {
+            background: #e9ecef;
+        }
+
+        .session-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .session-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-mentor);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .session-details h4 {
+            margin-bottom: 5px;
+        }
+
+        .session-details p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .session-status {
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-confirmed {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .status-pending {
+            background: var(--warning);
+            color: var(--white);
+        }
+
+        .status-completed {
+            background: var(--gray);
+            color: var(--white);
+        }
+
+        /* Calendar Section */
+        .calendar-section {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .calendar-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 25px;
+        }
+
+        .calendar-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .calendar-mini {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 20px;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .calendar-title {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            text-align: center;
+        }
+
+        .calendar-day {
+            padding: 8px 5px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-day.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .upcoming-sessions {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 20px;
+        }
+
+        .upcoming-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .upcoming-item {
+            padding: 12px;
+            background: var(--white);
+            border-radius: var(--radius);
+            border-left: 4px solid var(--primary);
+        }
+
+        /* Availability Section */
+        .availability-section {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .availability-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .time-slot {
+            background: var(--light);
+            padding: 15px;
+            border-radius: var(--radius);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .time-slot:hover {
+            background: #e9ecef;
+        }
+
+        .time-slot.selected {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--secondary);
+        }
+
+        .time-slot.booked {
+            background: var(--danger);
+            color: var(--white);
+            cursor: not-allowed;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .mentors-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+            
+            .calendar-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .tabs-list {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .mentor-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .mentor-actions {
+                flex-direction: column;
+            }
+            
+            .session-item {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .availability-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h1>UTP Empleabilidad</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="dashboard-ia.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                        <li><a href="bolsa-trabajo.html"><i class="fas fa-briefcase"></i> Bolsa de Trabajo</a></li>
+                        <li><a href="eventos.html"><i class="fas fa-calendar-alt"></i> Eventos</a></li>
+                        <li><a href="mi-cv.html"><i class="fas fa-file-alt"></i> Mi CV</a></li>
+                        <li><a href="mentoria.html" class="active"><i class="fas fa-users"></i> Mentoría</a></li>
+                    </ul>
+                </nav>
+                <div class="user-actions">
+                 
+                    <a href="perfil.html" class="btn btn-primary"><i class="fas fa-user"></i> Mi Perfil</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <aside class="sidebar">
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard-ia.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="bolsa-trabajo.html"><i class="fas fa-briefcase"></i> Bolsa de Trabajo</a></li>
+                    <li><a href="eventos.html"><i class="fas fa-calendar-alt"></i> Eventos</a></li>
+                    <li><a href="mi-cv.html"><i class="fas fa-file-alt"></i> Mi CV</a></li>
+                    <li><a href="empresas.html"><i class="fas fa-building"></i> Empresas</a></li>
+                    <li><a href="mentoria.html" class="active"><i class="fas fa-users"></i> Mentoría</a></li>
+                    <li><a href="estadisticas.html"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
+                </ul>
+            </aside>
+
+            <main class="mentoria-content">
+                <!-- Page Header -->
+                <section class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-users"></i> Programa de Mentoría UTP
+                    </h1>
+                    <p class="page-subtitle">Conecta con mentores expertos y acelera tu desarrollo profesional</p>
+                </section>
+
+                <!-- Stats Cards -->
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <div class="stat-icon mentors">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="stat-value">48</div>
+                        <div class="stat-label">Mentores Activos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon sessions">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="stat-value">156</div>
+                        <div class="stat-label">Sesiones Mensuales</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon rating">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-value">4.8/5</div>
+                        <div class="stat-label">Rating Promedio</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: var(--gradient);">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="stat-value">92%</div>
+                        <div class="stat-label">Satisfacción</div>
+                    </div>
+                </div>
+
+                <!-- Tabs Navigation -->
+                <section class="tabs-navigation">
+                    <ul class="tabs-list">
+                        <li class="tab-item active" onclick="switchTab('mentores')">Encontrar Mentores</li>
+                        <li class="tab-item" onclick="switchTab('sesiones')">Mis Sesiones</li>
+                        <li class="tab-item" onclick="switchTab('calendario')">Calendario</li>
+                        <li class="tab-item" onclick="switchTab('recursos')">Recursos</li>
+                    </ul>
+                </section>
+
+                <!-- Mentores Tab -->
+                <div id="mentores-tab" class="tab-content">
+                    <!-- Search Section -->
+                    <section class="search-section" style="background: var(--white); border-radius: var(--radius); padding: 25px; box-shadow: var(--shadow); margin-bottom: 25px;">
+                        <div class="search-header">
+                            <h2 class="search-title">Buscar Mentores</h2>
+                            <div class="search-results">
+                                <span>48 mentores disponibles</span>
+                            </div>
+                        </div>
+                        
+                        <div class="search-filters" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                            <div class="filter-group">
+                                <label class="filter-label">Especialidad</label>
+                                <select class="filter-select">
+                                    <option value="">Todas las especialidades</option>
+                                    <option value="tecnologia">Tecnología</option>
+                                    <option value="liderazgo">Liderazgo</option>
+                                    <option value="emprendimiento">Emprendimiento</option>
+                                    <option value="carrera">Desarrollo de Carrera</option>
+                                </select>
+                            </div>
+                            
+                            <div class="filter-group">
+                                <label class="filter-label">Industria</label>
+                                <select class="filter-select">
+                                    <option value="">Todas las industrias</option>
+                                    <option value="tech">Tecnología</option>
+                                    <option value="finanzas">Finanzas</option>
+                                    <option value="salud">Salud</option>
+                                    <option value="educacion">Educación</option>
+                                </select>
+                            </div>
+                            
+                            <div class="filter-group">
+                                <label class="filter-label">Experiencia</label>
+                                <select class="filter-select">
+                                    <option value="">Cualquier experiencia</option>
+                                    <option value="junior">1-5 años</option>
+                                    <option value="mid">5-10 años</option>
+                                    <option value="senior">10+ años</option>
+                                </select>
+                            </div>
+                            
+                            <div class="filter-group">
+                                <label class="filter-label">Idioma</label>
+                                <select class="filter-select">
+                                    <option value="">Cualquier idioma</option>
+                                    <option value="español">Español</option>
+                                    <option value="ingles">Inglés</option>
+                                    <option value="portugues">Portugués</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="search-actions" style="display: flex; gap: 10px; justify-content: flex-end;">
+                            <button class="btn btn-secondary" id="clear-mentor-filters">
+                                <i class="fas fa-times"></i> Limpiar
+                            </button>
+                            <button class="btn btn-primary" id="search-mentors">
+                                <i class="fas fa-search"></i> Buscar Mentores
+                            </button>
+                        </div>
+                    </section>
+
+                    <!-- Mentors Grid -->
+                    <section class="mentors-grid">
+                        <!-- Mentor 1 -->
+                        <div class="mentor-card featured">
+                            <div class="mentor-header">
+                                <div class="mentor-avatar">
+                                    CP
+                                </div>
+                                <div class="mentor-info">
+                                    <h3 class="mentor-name">Carlos Pérez</h3>
+                                    <p class="mentor-title">Director de Tecnología - IBM Perú</p>
+                                    <div class="mentor-rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star-half-alt"></i>
+                                        </div>
+                                        <span class="rating-value">4.8</span>
+                                        <span>(42 reviews)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mentor-meta">
+                                <div class="mentor-meta-item">
+                                    <i class="fas fa-briefcase"></i>
+                                    <span>15+ años exp.</span>
+                                </div>
+                                <div class="mentor-meta-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>Egresado UTP</span>
+                                </div>
+                                <div class="mentor-meta-item">
+                                    <i class="fas fa-users"></i>
+                                    <span>125 sesiones</span>
+                                </div>
+                            </div>
+                            
+                            <p class="mentor-description">
+                                Especialista en transformación digital y liderazgo tecnológico. 
+                                He guiado a más de 80 profesionales en su crecimiento carrera.
+                            </p>
+                            
+                            <div class="mentor-expertise">
+                                <span class="expertise-tag">Liderazgo</span>
+                                <span class="expertise-tag">Tecnología</span>
+                                <span class="expertise-tag">Gestión</span>
+                                <span class="expertise-tag">Cloud Computing</span>
+                            </div>
+                            
+                            <div class="mentor-actions">
+                                <button class="btn btn-primary" onclick="viewMentorProfile('carlos-perez')">
+                                    <i class="fas fa-eye"></i> Ver Perfil
+                                </button>
+                                <button class="btn btn-success" onclick="scheduleSession('carlos-perez')">
+                                    <i class="fas fa-calendar-plus"></i> Agendar
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Mentor 2 -->
+                        <div class="mentor-card">
+                            <div class="mentor-header">
+                                <div class="mentor-avatar" style="background: linear-gradient(135deg, #FF6B6B, #FF8E53);">
+                                    AG
+                                </div>
+                                <div class="mentor-info">
+                                    <h3 class="mentor-name">Ana García</h3>
+                                    <p class="mentor-title">Data Scientist Senior - Microsoft</p>
+                                    <div class="mentor-rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <span class="rating-value">5.0</span>
+                                        <span>(28 reviews)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mentor-meta">
+                                <div class="mentor-meta-item">
+                                    <i class="fas fa-briefcase"></i>
+                                    <span>8 años exp.</span>
+                                </div>
+                                <div class="mentor-meta-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>Egresada UTP</span>
+                                </div>
+                                <div class="mentor-meta-item">
+                                    <i class="fas fa-users"></i>
+                                    <span>89 sesiones</span>
+                                </div>
+                            </div>
+                            
+                            <p class="mentor-description">
+                                Apasionada por la ciencia de datos y machine learning. 
+                                Especialista en preparación para entrevistas técnicas en FAANG.
+                            </p>
+                            
+                            <div class="mentor-expertise">
+                                <span class="expertise-tag">Data Science</span>
+                                <span class="expertise-tag">Machine Learning</span>
+                                <span class="expertise-tag">Python</span>
+                                <span class="expertise-tag">Entrevistas</span>
+                            </div>
+                            
+                            <div class="mentor-actions">
+                                <button class="btn btn-primary" onclick="viewMentorProfile('ana-garcia')">
+                                    <i class="fas fa-eye"></i> Ver Perfil
+                                </button>
+                                <button class="btn btn-success" onclick="scheduleSession('ana-garcia')">
+                                    <i class="fas fa-calendar-plus"></i> Agendar
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Mentor 3 -->
+                        <div class="mentor-card">
+                            <div class="mentor-header">
+                                <div class="mentor-avatar" style="background: linear-gradient(135deg, #4ECDC4, #44A08D);">
+                                    RM
+                                </div>
+                                <div class="mentor-info">
+                                    <h3 class="mentor-name">Roberto Mendoza</h3>
+                                    <p class="mentor-title">Fundador - Startup Tech</p>
+                                    <div class="mentor-rating">
+                                        <div class="stars">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <span class="rating-value">4.9</span>
+                                        <span>(35 reviews)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mentor-meta">
+                                <div class="mentor-meta-item">
+                                    <i class="fas fa-briefcase"></i>
+                                    <span>12 años exp.</span>
+                                </div>
+                                <div class="mentor-meta-item">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>Egresado UTP</span>
+                                </div>
+                                <div class="mentor-meta-item">
+                                    <i class="fas fa-users"></i>
+                                    <span>67 sesiones</span>
+                                </div>
+                            </div>
+                            
+                            <p class="mentor-description">
+                                Emprendedor serial con 3 startups exitosas. 
+                                Experto en levantamiento de capital y estrategia de crecimiento.
+                            </p>
+                            
+                            <div class="mentor-expertise">
+                                <span class="expertise-tag">Emprendimiento</span>
+                                <span class="expertise-tag">Startups</span>
+                                <span class="expertise-tag">Venture Capital</span>
+                                <span class="expertise-tag">Growth</span>
+                            </div>
+                            
+                            <div class="mentor-actions">
+                                <button class="btn btn-primary" onclick="viewMentorProfile('roberto-mendoza')">
+                                    <i class="fas fa-eye"></i> Ver Perfil
+                                </button>
+                                <button class="btn btn-success" onclick="scheduleSession('roberto-mendoza')">
+                                    <i class="fas fa-calendar-plus"></i> Agendar
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Sesiones Tab -->
+                <div id="sesiones-tab" class="tab-content" style="display: none;">
+                    <section class="sessions-section">
+                        <div class="section-header">
+                            <h2 class="section-title">
+                                <i class="fas fa-video"></i> Mis Sesiones de Mentoría
+                            </h2>
+                            <button class="btn btn-primary" onclick="scheduleNewSession()">
+                                <i class="fas fa-plus"></i> Nueva Sesión
+                            </button>
+                        </div>
+                        <div class="sessions-list">
+                            <div class="session-item">
+                                <div class="session-info">
+                                    <div class="session-avatar">
+                                        CP
+                                    </div>
+                                    <div class="session-details">
+                                        <h4>Sesión con Carlos Pérez</h4>
+                                        <p>Preparación para entrevista de liderazgo técnico</p>
+                                        <small><i class="fas fa-calendar"></i> Hoy, 3:00 PM - 4:00 PM</small>
+                                    </div>
+                                </div>
+                                <span class="session-status status-confirmed">Confirmada</span>
+                            </div>
+                            <div class="session-item">
+                                <div class="session-info">
+                                    <div class="session-avatar" style="background: linear-gradient(135deg, #FF6B6B, #FF8E53);">
+                                        AG
+                                    </div>
+                                    <div class="session-details">
+                                        <h4>Sesión con Ana García</h4>
+                                        <p>Revisión de proyecto de machine learning</p>
+                                        <small><i class="fas fa-calendar"></i> Viernes, 10:00 AM - 11:00 AM</small>
+                                    </div>
+                                </div>
+                                <span class="session-status status-pending">Por Confirmar</span>
+                            </div>
+                            <div class="session-item">
+                                <div class="session-info">
+                                    <div class="session-avatar" style="background: linear-gradient(135deg, #4ECDC4, #44A08D);">
+                                        RM
+                                    </div>
+                                    <div class="session-details">
+                                        <h4>Sesión con Roberto Mendoza</h4>
+                                        <p>Estrategia de emprendimiento y pitch</p>
+                                        <small><i class="fas fa-calendar"></i> 15 Oct, 2:00 PM - 3:00 PM</small>
+                                    </div>
+                                </div>
+                                <span class="session-status status-completed">Completada</span>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Calendario Tab -->
+                <div id="calendario-tab" class="tab-content" style="display: none;">
+                    <section class="calendar-section">
+                        <div class="section-header">
+                            <h2 class="section-title">
+                                <i class="fas fa-calendar-alt"></i> Calendario de Sesiones
+                            </h2>
+                        </div>
+                        <div class="calendar-container">
+                            <div class="calendar-sidebar">
+                                <div class="calendar-mini">
+                                    <div class="calendar-header">
+                                        <h3 class="calendar-title">Octubre 2025</h3>
+                                        <div class="calendar-nav">
+                                            <button class="btn btn-sm btn-secondary"><i class="fas fa-chevron-left"></i></button>
+                                            <button class="btn btn-sm btn-secondary"><i class="fas fa-chevron-right"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="calendar-days">
+                                        <!-- Días del calendario se generarían con JavaScript -->
+                                        <div class="calendar-day">1</div>
+                                        <div class="calendar-day">2</div>
+                                        <div class="calendar-day active">3</div>
+                                        <!-- ... más días -->
+                                    </div>
+                                </div>
+                                <div class="upcoming-sessions">
+                                    <h4>Próximas Sesiones</h4>
+                                    <div class="upcoming-list">
+                                        <div class="upcoming-item">
+                                            <strong>Carlos Pérez</strong>
+                                            <p>Hoy, 3:00 PM</p>
+                                        </div>
+                                        <div class="upcoming-item">
+                                            <strong>Ana García</strong>
+                                            <p>Viernes, 10:00 AM</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="availability-section">
+                                <h4>Disponibilidad para Hoy</h4>
+                                <div class="availability-grid">
+                                    <div class="time-slot">9:00 AM</div>
+                                    <div class="time-slot">10:00 AM</div>
+                                    <div class="time-slot booked">11:00 AM</div>
+                                    <div class="time-slot">12:00 PM</div>
+                                    <div class="time-slot">1:00 PM</div>
+                                    <div class="time-slot selected">2:00 PM</div>
+                                    <div class="time-slot booked">3:00 PM</div>
+                                    <div class="time-slot">4:00 PM</div>
+                                    <div class="time-slot">5:00 PM</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal para Agendar Sesión -->
+    <div class="modal" id="scheduleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Agendar Sesión de Mentoría</h3>
+                <button class="modal-close" onclick="closeScheduleModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Seleccionar Mentor</label>
+                    <select class="form-control">
+                        <option>Carlos Pérez - Director de Tecnología, IBM</option>
+                        <option>Ana García - Data Scientist, Microsoft</option>
+                        <option>Roberto Mendoza - Fundador, Startup Tech</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Fecha y Hora</label>
+                    <input type="datetime-local" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Duración</label>
+                    <select class="form-control">
+                        <option>30 minutos</option>
+                        <option>60 minutos (Recomendado)</option>
+                        <option>90 minutos</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Tema de la Sesión</label>
+                    <textarea class="form-control" rows="3" placeholder="Describe los temas que quieres tratar en la sesión..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer" style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                <button class="btn btn-secondary" onclick="closeScheduleModal()">Cancelar</button>
+                <button class="btn btn-primary" onclick="confirmSession()">Confirmar Sesión</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Funcionalidades de pestañas
+        function switchTab(tabName) {
+            // Ocultar todas las pestañas
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.style.display = 'none';
+            });
+            
+            // Mostrar la pestaña seleccionada
+            document.getElementById(tabName + '-tab').style.display = 'block';
+            
+            // Actualizar estado activo de pestañas
+            document.querySelectorAll('.tab-item').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Funcionalidades de mentores
+        function viewMentorProfile(mentorId) {
+            showNotification(`Cargando perfil del mentor...`);
+            // En una implementación real: window.location.href = `mentor-perfil.html?id=${mentorId}`;
+        }
+
+        function scheduleSession(mentorId) {
+            document.getElementById('scheduleModal').style.display = 'flex';
+        }
+
+        function scheduleNewSession() {
+            document.getElementById('scheduleModal').style.display = 'flex';
+        }
+
+        function closeScheduleModal() {
+            document.getElementById('scheduleModal').style.display = 'none';
+        }
+
+        function confirmSession() {
+            closeScheduleModal();
+            showNotification('Sesión agendada exitosamente. Recibirás una confirmación por email.');
+        }
+
+        // Funcionalidad de búsqueda
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchButton = document.getElementById('search-mentors');
+            const clearButton = document.getElementById('clear-mentor-filters');
+            
+            searchButton.addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Buscando...';
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-search"></i> Buscar Mentores';
+                    showNotification('Búsqueda completada. Se encontraron 48 mentores.');
+                }, 1500);
+            });
+            
+            clearButton.addEventListener('click', function() {
+                const selects = document.querySelectorAll('.filter-select');
+                selects.forEach(select => {
+                    select.selectedIndex = 0;
+                });
+                showNotification('Filtros limpiados correctamente');
+            });
+
+            // Funcionalidad de selección de horarios
+            const timeSlots = document.querySelectorAll('.time-slot:not(.booked)');
+            timeSlots.forEach(slot => {
+                slot.addEventListener('click', function() {
+                    timeSlots.forEach(s => s.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+        });
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--success);
+                color: white;
+                padding: 15px 20px;
+                border-radius: var(--radius);
+                box-shadow: var(--shadow);
+                z-index: 1001;
+                animation: slideIn 0.5s ease;
+            `;
+            notification.innerHTML = `
+                <i class="fas fa-check-circle"></i> ${message}
+            `;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.5s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 500);
+            }, 4000);
+        }
+
+        // Agregar estilos de animación
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+            
+            .tab-content {
+                display: block;
+            }
+            
+            .btn-sm {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .search-section .filter-select, .search-section .filter-input {
+                padding: 12px 15px;
+                border: 1px solid #ddd;
+                border-radius: var(--radius);
+                font-size: 1rem;
+                transition: all 0.3s ease;
+            }
+            
+            .search-section .filter-select:focus, .search-section .filter-input:focus {
+                border-color: var(--primary);
+                box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+                outline: none;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Cerrar modal al hacer click fuera
+        window.onclick = function(event) {
+            const modal = document.getElementById('scheduleModal');
+            if (event.target === modal) {
+                closeScheduleModal();
+            }
+        }
+    </script>
+</body>
+</html>

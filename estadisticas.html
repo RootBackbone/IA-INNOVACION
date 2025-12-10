@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas - UTP Empleabilidad</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* ... (CSS original) ... */
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --warning: #f8961e;
+            --info: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, #4361ee, #3a0ca3);
+            --gradient-success: linear-gradient(135deg, #4cc9f0, #4895ef);
+            --gradient-warning: linear-gradient(135deg, #f8961e, #f3722c);
+            --gradient-danger: linear-gradient(135deg, #f72585, #b5179e);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: var(--radius);
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--white);
+            color: var(--white);
+        }
+
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 25px;
+            padding: 25px 0;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .sidebar-menu i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Estadísticas Content */
+        .estadisticas-content {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .page-subtitle {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        /* Filtros Rápidos */
+        .filters-section {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-label {
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .filter-select {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            outline: none;
+        }
+
+        /* KPI Cards */
+        .kpi-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .kpi-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .kpi-card.primary::before {
+            background: var(--gradient);
+        }
+
+        .kpi-card.success::before {
+            background: var(--gradient-success);
+        }
+
+        .kpi-card.warning::before {
+            background: var(--gradient-warning);
+        }
+
+        .kpi-card.danger::before {
+            background: var(--gradient-danger);
+        }
+
+        .kpi-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .kpi-title {
+            font-size: 0.9rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .kpi-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.2rem;
+        }
+
+        .kpi-card.primary .kpi-icon {
+            background: var(--gradient);
+        }
+
+        .kpi-card.success .kpi-icon {
+            background: var(--gradient-success);
+        }
+
+        .kpi-card.warning .kpi-icon {
+            background: var(--gradient-warning);
+        }
+
+        .kpi-card.danger .kpi-icon {
+            background: var(--gradient-danger);
+        }
+
+        .kpi-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .kpi-change {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .kpi-change.positive {
+            color: var(--success);
+        }
+
+        .kpi-change.negative {
+            color: var(--danger);
+        }
+
+        /* Charts Grid */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .chart-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .chart-card.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chart-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+
+        /* Progress Stats */
+        .progress-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .progress-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .progress-item {
+            margin-bottom: 20px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .progress-title {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .progress-value {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--light);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        /* Comparison Cards */
+        .comparison-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .comparison-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .comparison-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .comparison-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .comparison-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--light);
+        }
+
+        .comparison-item:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-label {
+            color: var(--dark);
+        }
+
+        .comparison-value {
+            font-weight: 600;
+        }
+
+        /* IA Insights */
+        .ia-insights {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .insights-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .insights-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ia-badge {
+            background: var(--warning);
+            color: var(--white);
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: 500;
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .insight-card {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 20px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .insight-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--primary);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .insight-text {
+            color: var(--dark);
+            line-height: 1.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .kpi-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .progress-stats,
+            .comparison-cards,
+            .insights-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h1>UTP Empleabilidad</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="integracion_final.html"><i class="fas fa-brain"></i> Análisis IA</a></li>
+                        <li><a href="dashboard-ia.html"><i class="fas fa-home"></i> Dashboard General</a></li>
+                        <li><a href="bolsa-trabajo.html"><i class="fas fa-briefcase"></i> Bolsa de Trabajo</a></li>
+                        <li><a href="eventos.html"><i class="fas fa-calendar-alt"></i> Eventos</a></li>
+                        <li><a href="mi-cv.html"><i class="fas fa-file-alt"></i> Mi CV</a></li>
+                        <li><a href="estadisticas.html" class="active"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
+                    </ul>
+                </nav>
+                <div class="user-actions">
+                    
+                    <a href="perfil.html" class="btn btn-primary"><i class="fas fa-user"></i> Mi Perfil</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <aside class="sidebar">
+                <ul class="sidebar-menu">
+                    <li><a href="integracion_final.html"><i class="fas fa-brain"></i> Análisis IA</a></li>
+                    <li><a href="dashboard-ia.html"><i class="fas fa-tachometer-alt"></i> Dashboard General</a></li>
+                    <li><a href="bolsa-trabajo.html"><i class="fas fa-briefcase"></i> Bolsa de Trabajo</a></li>
+                    <li><a href="eventos.html"><i class="fas fa-calendar-alt"></i> Eventos</a></li>
+                    <li><a href="mi-cv.html"><i class="fas fa-file-alt"></i> Mi CV</a></li>
+                    <li><a href="empresas.html"><i class="fas fa-building"></i> Empresas</a></li>
+                    <li><a href="mentoria.html"><i class="fas fa-users"></i> Mentoría</a></li>
+                    <li><a href="estadisticas.html" class="active"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
+                </ul>
+            </aside>
+
+            <main class="estadisticas-content">
+                <section class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-chart-line"></i> Dashboard de Estadísticas
+                    </h1>
+                    <p class="page-subtitle">Métricas avanzadas y análisis de tu progreso profesional</p>
+                </section>
+                
+                <section class="filters-section">
+                    <div class="filters-grid">
+                        <div class="filter-group">
+                            <label class="filter-label">Período</label>
+                            <select class="filter-select" id="periodFilter">
+                                <option value="30">Últimos 30 días</option>
+                                <option value="90" selected>Últimos 3 meses</option>
+                                <option value="180">Últimos 6 meses</option>
+                                <option value="365">Último año</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">Carrera</label>
+                            <select class="filter-select" id="careerFilter">
+                                <option value="all">Todas las carreras</option>
+                                <option value="sistemas" selected>Ingeniería de Sistemas</option>
+                                <option value="industrial">Ingeniería Industrial</option>
+                                <option value="civil">Ingeniería Civil</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">Tipo de Métrica</label>
+                            <select class="filter-select" id="metricFilter">
+                                <option value="all">Todas las métricas</option>
+                                <option value="empleabilidad">Empleabilidad</option>
+                                <option value="postulaciones">Postulaciones</option>
+                                <option value="habilidades">Habilidades</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">Comparar Con</label>
+                            <select class="filter-select" id="compareFilter">
+                                <option value="none">No comparar</option>
+                                <option value="promedio">Promedio UTP</option>
+                                <option value="top10">Top 10% UTP</option>
+                                <option value="mercado">Mercado Laboral</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="kpi-cards">
+                    <div class="kpi-card primary">
+                        <div class="kpi-header">
+                            <div class="kpi-title">Tasa de Empleabilidad</div>
+                            <div class="kpi-icon">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                        </div>
+                        <div class="kpi-value">85%</div>
+                        <div class="kpi-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+5.2% vs último mes</span>
+                        </div>
+                    </div>
+                    
+                    <div class="kpi-card success">
+                        <div class="kpi-header">
+                            <div class="kpi-title">Postulaciones Activas</div>
+                            <div class="kpi-icon">
+                                <i class="fas fa-paper-plane"></i>
+                            </div>
+                        </div>
+                        <div class="kpi-value">12</div>
+                        <div class="kpi-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+3 esta semana</span>
+                        </div>
+                    </div>
+                    
+                    <div class="kpi-card warning">
+                        <div class="kpi-header">
+                            <div class="kpi-title">Match con Vacantes</div>
+                            <div class="kpi-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                        </div>
+                        <div class="kpi-value">78%</div>
+                        <div class="kpi-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+8.5% mejoría</span>
+                        </div>
+                    </div>
+                    
+                    <div class="kpi-card danger">
+                        <div class="kpi-header">
+                            <div class="kpi-title">Tiempo Promedio Respuesta</div>
+                            <div class="kpi-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                        </div>
+                        <div class="kpi-value">3.2 días</div>
+                        <div class="kpi-change negative">
+                            <i class="fas fa-arrow-down"></i>
+                            <span>-1.1 días vs promedio</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="charts-grid">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">
+                                <i class="fas fa-chart-bar"></i> Postulaciones por Estado
+                            </h3>
+                            <div class="chart-actions">
+                                <button class="btn btn-sm btn-secondary">Mensual</button>
+                                <button class="btn btn-sm btn-primary">Trimestral</button>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="applicationsChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">
+                                <i class="fas fa-chart-pie"></i> Distribución por Industria
+                            </h3>
+                            <div class="chart-actions">
+                                <button class="btn btn-sm btn-secondary">Ver Detalles</button>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="industryChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card full-width">
+                        <div class="chart-header">
+                            <h3 class="chart-title">
+                                <i class="fas fa-chart-line"></i> Progreso de Empleabilidad
+                            </h3>
+                            <div class="chart-actions">
+                                <select class="filter-select" style="width: 150px;">
+                                    <option>Últimos 6 meses</option>
+                                    <option>Último año</option>
+                                    <option>Todo el período</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="progressChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="progress-stats">
+                    <div class="progress-card">
+                        <h3 class="chart-title">
+                            <i class="fas fa-tachometer-alt"></i> Métricas de Progreso
+                        </h3>
+                        <div class="progress-item">
+                            <div class="progress-header">
+                                <span class="progress-title">Perfil Completo</span>
+                                <span class="progress-value">85%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%; background: var(--primary);"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-header">
+                                <span class="progress-title">Habilidades Validadas</span>
+                                <span class="progress-value">72%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 72%; background: var(--success);"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-header">
+                                <span class="progress-title">CV Optimizado</span>
+                                <span class="progress-value">92%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 92%; background: var(--warning);"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-header">
+                                <span class="progress-title">Red de Contactos</span>
+                                <span class="progress-value">65%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%; background: var(--info);"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="progress-card">
+                        <h3 class="chart-title">
+                            <i class="fas fa-bullseye"></i> Objetivos Cumplidos
+                        </h3>
+                        <div class="progress-item">
+                            <div class="progress-header">
+                                <span class="progress-title">Postulaciones Mensuales</span>
+                                <span class="progress-value">8/10</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 80%; background: var(--primary);"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-header">
+                                <span class="progress-title">Sesiones de Mentoría</span>
+                                <span class="progress-value">3/4</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 75%; background: var(--success);"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-header">
+                                <span class="progress-title">Certificaciones</span>
+                                <span class="progress-value">2/3</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 67%; background: var(--warning);"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-header">
+                                <span class="progress-title">Eventos Asistidos</span>
+                                <span class="progress-value">5/6</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 83%; background: var(--info);"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="comparison-cards">
+                    <div class="comparison-card">
+                        <div class="comparison-header">
+                            <h3 class="comparison-title">Comparación con Promedio UTP</h3>
+                            <span class="ia-badge">IA</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Tasa de Empleabilidad</span>
+                            <span class="comparison-value" style="color: var(--success);">+15%</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Salario Esperado</span>
+                            <span class="comparison-value" style="color: var(--success);">+12%</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Tiempo de Colocación</span>
+                            <span class="comparison-value" style="color: var(--danger);">-8 días</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Match con Empresas</span>
+                            <span class="comparison-value" style="color: var(--success);">+22%</span>
+                        </div>
+                    </div>
+
+                    <div class="comparison-card">
+                        <div class="comparison-header">
+                            <h3 class="comparison-title">Rendimiento por Habilidad</h3>
+                            <span class="ia-badge">IA</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Python</span>
+                            <span class="comparison-value" style="color: var(--success);">Top 15%</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Machine Learning</span>
+                            <span class="comparison-value" style="color: var(--warning);">Top 35%</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Cloud Computing</span>
+                            <span class="comparison-value" style="color: var(--danger);">Top 60%</span>
+                        </div>
+                        <div class="comparison-item">
+                            <span class="comparison-label">Liderazgo</span>
+                            <span class="comparison-value" style="color: var(--success);">Top 20%</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="ia-insights">
+                    <div class="insights-header">
+                        <h3 class="insights-title">
+                            <i class="fas fa-brain"></i> Insights de Inteligencia Artificial
+                            <span class="ia-badge">EN VIVO</span>
+                        </h3>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-download"></i> Exportar Reporte
+                        </button>
+                    </div>
+                    <div class="insights-grid">
+                        <div class="insight-card">
+                            <div class="insight-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <p class="insight-text">
+                                <strong>Oportunidad:</strong> Tu perfil tiene 92% de match con vacantes de Data Science. 
+                                Considera postular a 3 nuevas posiciones esta semana.
+                            </p>
+                        </div>
+                        <div class="insight-card">
+                            <div class="insight-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <p class="insight-text">
+                                <strong>Tendencia:</strong> Las habilidades en Cloud Computing han aumentado 
+                                su demanda en 35% este trimestre en tu área.
+                            </p>
+                        </div>
+                        <div class="insight-card">
+                            <div class="insight-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <p class="insight-text">
+                                <strong>Recomendación:</strong> Fortalece tus habilidades en AWS y Docker 
+                                para aumentar tu empleabilidad en 18%.
+                            </p>
+                        </div>
+                        <div class="insight-card">
+                            <div class="insight-icon">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <p class="insight-text">
+                                <strong>Meta:</strong> Basado en tu progreso, podrías alcanzar 95% de 
+                                empleabilidad en los próximos 45 días.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Inicializar gráficos cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCharts();
+            initializeFilters();
+        });
+
+        function initializeCharts() {
+            // Gráfico de postulaciones por estado
+            const applicationsCtx = document.getElementById('applicationsChart').getContext('2d');
+            new Chart(applicationsCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Aprobadas',
+                        data: [12, 19, 15, 22, 18, 25],
+                        backgroundColor: '#4cc9f0',
+                        borderColor: '#4895ef',
+                        borderWidth: 1
+                    }, {
+                        label: 'Pendientes',
+                        data: [8, 12, 10, 15, 12, 18],
+                        backgroundColor: '#f8961e',
+                        borderColor: '#f3722c',
+                        borderWidth: 1
+                    }, {
+                        label: 'Rechazadas',
+                        data: [3, 5, 4, 6, 5, 7],
+                        backgroundColor: '#f72585',
+                        borderColor: '#b5179e',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Gráfico de distribución por industria
+            const industryCtx = document.getElementById('industryChart').getContext('2d');
+            new Chart(industryCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Tecnología', 'Banca', 'Retail', 'Salud', 'Consultoría'],
+                    datasets: [{
+                        data: [35, 25, 15, 12, 13],
+                        backgroundColor: [
+                            '#4361ee',
+                            '#4cc9f0',
+                            '#f8961e',
+                            '#f72585',
+                            '#4895ef'
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Gráfico de progreso de empleabilidad
+            const progressCtx = document.getElementById('progressChart').getContext('2d');
+            new Chart(progressCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct'],
+                    datasets: [{
+                        label: 'Tu Empleabilidad',
+                        data: [65, 68, 72, 75, 78, 80, 82, 83, 84, 85],
+                        borderColor: '#4361ee',
+                        backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Promedio UTP',
+                        data: [60, 62, 64, 66, 68, 70, 71, 72, 73, 74],
+                        borderColor: '#f8961e',
+                        backgroundColor: 'rgba(248, 150, 30, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        borderDash: [5, 5]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            min: 50,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function initializeFilters() {
+            // Funcionalidad de filtros
+            const filters = document.querySelectorAll('.filter-select');
+            filters.forEach(filter => {
+                filter.addEventListener('change', function() {
+                    showNotification('Actualizando estadísticas...');
+                    // Simular actualización de datos
+                    setTimeout(() => {
+                        showNotification('Estadísticas actualizadas correctamente');
+                    }, 1000);
+                });
+            });
+
+            // Funcionalidad de botones de período
+            const periodButtons = document.querySelectorAll('.chart-actions .btn');
+            periodButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    periodButtons.forEach(btn => btn.classList.remove('btn-primary'));
+                    periodButtons.forEach(btn => btn.classList.add('btn-secondary'));
+                    this.classList.remove('btn-secondary');
+                    this.classList.add('btn-primary');
+                    showNotification(`Período actualizado: ${this.textContent}`);
+                });
+            });
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--success);
+                color: white;
+                padding: 15px 20px;
+                border-radius: var(--radius);
+                box-shadow: var(--shadow);
+                z-index: 1001;
+                animation: slideIn 0.5s ease;
+            `;
+            notification.innerHTML = `
+                <i class="fas fa-check-circle"></i> ${message}
+            `;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.5s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 500);
+            }, 3000);
+        }
+
+        // Agregar estilos de animación
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+            
+            .btn-sm {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+Algoritmo;Tipo;Métrica Principal;Aplicación en Plataforma
+Árbol de Decisión;Supervisado - Clasificación;25.00% precisión;Predecir satisfacción y recomendar mejoras del servicio
+KNN (simulado);Supervisado - Recomendación;Porcentaje de match de habilidades;Recomendar vacantes según las habilidades del estudiante
+DBSCAN;No supervisado - Clustering;6 clústeres detectados;Segmentar usuarios para atención y comunicaciones personalizadas
+MeanShift;No supervisado - Clustering;3 clústeres detectados;Identificar grupos naturales de comportamiento para decisiones estratégicas

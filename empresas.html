@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empresas - UTP Empleabilidad</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --warning: #f8961e;
+            --info: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, #4361ee, #3a0ca3);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: var(--radius);
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--white);
+            color: var(--white);
+        }
+
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 25px;
+            padding: 25px 0;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .sidebar-menu i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Empresas Content */
+        .empresas-content {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .page-subtitle {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        /* Search and Filters */
+        .search-section {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .search-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .search-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .search-results {
+            color: var(--gray);
+        }
+
+        .search-filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-label {
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .filter-select, .filter-input {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:focus, .filter-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            outline: none;
+        }
+
+        .search-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--dark);
+            border: 1px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+
+        /* Companies Grid */
+        .companies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .company-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .company-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .company-card.featured::before {
+            content: 'Destacada';
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: var(--warning);
+            color: var(--white);
+            padding: 5px 30px;
+            transform: rotate(45deg);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .company-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .company-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .company-badges {
+            display: flex;
+            gap: 8px;
+        }
+
+        .company-badge {
+            background: var(--light);
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: var(--dark);
+        }
+
+        .company-badge.alianza {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .company-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .company-industry {
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .company-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .company-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .company-description {
+            margin-bottom: 20px;
+            color: var(--dark);
+            line-height: 1.5;
+        }
+
+        .company-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: var(--light);
+            border-radius: var(--radius);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .company-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .btn-success:hover {
+            background: #3aa8d0;
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: var(--white);
+        }
+
+        .btn-warning:hover {
+            background: #e07c0c;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 10px;
+        }
+
+        .page-item {
+            list-style: none;
+        }
+
+        .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius);
+            background: var(--white);
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .page-link:hover, .page-link.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* Featured Companies */
+        .featured-section {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ia-badge {
+            background: var(--warning);
+            color: var(--white);
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: 500;
+        }
+
+        .featured-companies {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .featured-company {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-company::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .featured-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .featured-badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--white);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .featured-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .featured-description {
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .companies-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .search-filters {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .company-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .company-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .company-actions {
+                flex-direction: column;
+            }
+            
+            .featured-companies {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h1>UTP Empleabilidad</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="dashboard-ia.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                        <li><a href="bolsa-trabajo.html"><i class="fas fa-briefcase"></i> Bolsa de Trabajo</a></li>
+                        <li><a href="eventos.html"><i class="fas fa-calendar-alt"></i> Eventos</a></li>
+                        <li><a href="mi-cv.html"><i class="fas fa-file-alt"></i> Mi CV</a></li>
+                        <li><a href="empresas.html" class="active"><i class="fas fa-building"></i> Empresas</a></li>
+                    </ul>
+                </nav>
+                <div class="user-actions">
+                  
+                    <a href="perfil.html" class="btn btn-primary"><i class="fas fa-user"></i> Mi Perfil</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <aside class="sidebar">
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard-ia.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="bolsa-trabajo.html"><i class="fas fa-briefcase"></i> Bolsa de Trabajo</a></li>
+                    <li><a href="eventos.html"><i class="fas fa-calendar-alt"></i> Eventos</a></li>
+                    <li><a href="mi-cv.html"><i class="fas fa-file-alt"></i> Mi CV</a></li>
+                    <li><a href="empresas.html" class="active"><i class="fas fa-building"></i> Empresas</a></li>
+                    <li><a href="mentoria.html"><i class="fas fa-users"></i> Mentoría</a></li>
+                    <li><a href="estadisticas.html"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
+                </ul>
+            </aside>
+
+            <main class="empresas-content">
+                <!-- Page Header -->
+                <section class="page-header">
+                    <h1 class="page-title">
+                        <i class="fas fa-building"></i> Directorio de Empresas
+                    </h1>
+                    <p class="page-subtitle">Conecta con las mejores empresas aliadas de la UTP y descubre oportunidades laborales</p>
+                </section>
+
+                <!-- Featured Companies -->
+                <section class="featured-section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-star"></i> Empresas Destacadas
+                            <span class="ia-badge">RECOMENDADO</span>
+                        </h2>
+                    </div>
+                    <div class="featured-companies">
+                        <div class="featured-company">
+                            <div class="featured-content">
+                                <span class="featured-badge">Aliada Estratégica</span>
+                                <h3 class="featured-name">IBM Perú</h3>
+                                <p class="featured-description">Líder mundial en soluciones tecnológicas e innovación. Más de 50 egresados UTP trabajando actualmente.</p>
+                                <button class="btn btn-light" onclick="viewCompany('ibm')">
+                                    <i class="fas fa-eye"></i> Ver Perfil
+                                </button>
+                            </div>
+                        </div>
+                        <div class="featured-company">
+                            <div class="featured-content">
+                                <span class="featured-badge">Top Employer</span>
+                                <h3 class="featured-name">Microsoft</h3>
+                                <p class="featured-description">Empresa líder en software y cloud computing. Programa especial de prácticas para estudiantes UTP.</p>
+                                <button class="btn btn-light" onclick="viewCompany('microsoft')">
+                                    <i class="fas fa-eye"></i> Ver Perfil
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Search and Filters -->
+                <section class="search-section">
+                    <div class="search-header">
+                        <h2 class="search-title">Buscar Empresas</h2>
+                        <div class="search-results">
+                            <span>48 empresas encontradas</span>
+                        </div>
+                    </div>
+                    
+                    <div class="search-filters">
+                        <div class="filter-group">
+                            <label class="filter-label">Industria</label>
+                            <select class="filter-select">
+                                <option value="">Todas las industrias</option>
+                                <option value="tecnologia">Tecnología</option>
+                                <option value="banca">Banca y Finanzas</option>
+                                <option value="retail">Retail</option>
+                                <option value="salud">Salud</option>
+                                <option value="manufactura">Manufactura</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">Tamaño</label>
+                            <select class="filter-select">
+                                <option value="">Cualquier tamaño</option>
+                                <option value="startup">Startup (1-50)</option>
+                                <option value="pequena">Pequeña (51-200)</option>
+                                <option value="mediana">Mediana (201-1000)</option>
+                                <option value="grande">Grande (1000+)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">Ubicación</label>
+                            <select class="filter-select">
+                                <option value="">Cualquier ubicación</option>
+                                <option value="lima">Lima</option>
+                                <option value="arequipa">Arequipa</option>
+                                <option value="trujillo">Trujillo</option>
+                                <option value="cusco">Cusco</option>
+                                <option value="remoto">Remoto</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">Tipo de Alianza</label>
+                            <select class="filter-select">
+                                <option value="">Cualquier alianza</option>
+                                <option value="practicas">Prácticas Profesionales</option>
+                                <option value="contratacion">Contratación Directa</option>
+                                <option value="proyectos">Proyectos Conjuntos</option>
+                                <option value="sponsor">Sponsor Académico</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="search-actions">
+                        <button class="btn btn-secondary" id="clear-filters">
+                            <i class="fas fa-times"></i> Limpiar
+                        </button>
+                        <button class="btn btn-primary" id="search-button">
+                            <i class="fas fa-search"></i> Buscar Empresas
+                        </button>
+                    </div>
+                </section>
+                
+                <!-- Companies Grid -->
+                <section class="companies-grid" id="companiesContainer">
+                    <!-- Empresa 1 -->
+                    <div class="company-card featured">
+                        <div class="company-header">
+                            <div class="company-logo">
+                                IBM
+                            </div>
+                            <div class="company-badges">
+                                <span class="company-badge alianza">Aliada UTP</span>
+                                <span class="company-badge">💼 12 vacantes</span>
+                            </div>
+                        </div>
+                        
+                        <h3 class="company-name">IBM Perú</h3>
+                        <p class="company-industry">Tecnología • Consultoría IT</p>
+                        
+                        <div class="company-meta">
+                            <div class="company-meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Lima, San Isidro</span>
+                            </div>
+                            <div class="company-meta-item">
+                                <i class="fas fa-users"></i>
+                                <span>1000+ empleados</span>
+                            </div>
+                            <div class="company-meta-item">
+                                <i class="fas fa-star"></i>
+                                <span>4.8/5 (56 reviews)</span>
+                            </div>
+                        </div>
+                        
+                        <p class="company-description">
+                            Líder mundial en soluciones de inteligencia artificial, cloud computing y blockchain. 
+                            Más de 30 años de presencia en Perú.
+                        </p>
+                        
+                        <div class="company-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">24</div>
+                                <div class="stat-label">Egresados UTP</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">92%</div>
+                                <div class="stat-label">Match IA</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">15</div>
+                                <div class="stat-label">Vacantes Act.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="company-actions">
+                            <button class="btn btn-primary" onclick="viewCompany('ibm')">
+                                <i class="fas fa-eye"></i> Ver Perfil
+                            </button>
+                            <button class="btn btn-success" onclick="followCompany('ibm')">
+                                <i class="fas fa-plus"></i> Seguir
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Empresa 2 -->
+                    <div class="company-card">
+                        <div class="company-header">
+                            <div class="company-logo" style="background: linear-gradient(135deg, #FF6B6B, #FF8E53);">
+                                MP
+                            </div>
+                            <div class="company-badges">
+                                <span class="company-badge alianza">Aliada UTP</span>
+                                <span class="company-badge">💼 8 vacantes</span>
+                            </div>
+                        </div>
+                        
+                        <h3 class="company-name">Manpower</h3>
+                        <p class="company-industry">Recursos Humanos • Consultoría</p>
+                        
+                        <div class="company-meta">
+                            <div class="company-meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Lima, Miraflores</span>
+                            </div>
+                            <div class="company-meta-item">
+                                <i class="fas fa-users"></i>
+                                <span>500+ empleados</span>
+                            </div>
+                            <div class="company-meta-item">
+                                <i class="fas fa-star"></i>
+                                <span>4.6/5 (42 reviews)</span>
+                            </div>
+                        </div>
+                        
+                        <p class="company-description">
+                            Líder mundial en soluciones de talento y reclutamiento. Especialistas en 
+                            colocación de profesionales técnicos y universitarios.
+                        </p>
+                        
+                        <div class="company-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">18</div>
+                                <div class="stat-label">Egresados UTP</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">85%</div>
+                                <div class="stat-label">Match IA</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">8</div>
+                                <div class="stat-label">Vacantes Act.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="company-actions">
+                            <button class="btn btn-primary" onclick="viewCompany('manpower')">
+                                <i class="fas fa-eye"></i> Ver Perfil
+                            </button>
+                            <button class="btn btn-secondary" onclick="followCompany('manpower')">
+                                <i class="fas fa-plus"></i> Seguir
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Empresa 3 -->
+                    <div class="company-card">
+                        <div class="company-header">
+                            <div class="company-logo" style="background: linear-gradient(135deg, #4ECDC4, #44A08D);">
+                                IF
+                            </div>
+                            <div class="company-badges">
+                                <span class="company-badge alianza">Aliada UTP</span>
+                                <span class="company-badge">💼 5 vacantes</span>
+                            </div>
+                        </div>
+                        
+                        <h3 class="company-name">Inkafarma</h3>
+                        <p class="company-industry">Salud • Retail Farmacéutico</p>
+                        
+                        <div class="company-meta">
+                            <div class="company-meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Nacional</span>
+                            </div>
+                            <div class="company-meta-item">
+                                <i class="fas fa-users"></i>
+                                <span>3000+ empleados</span>
+                            </div>
+                            <div class="company-meta-item">
+                                <i class="fas fa-star"></i>
+                                <span>4.4/5 (38 reviews)</span>
+                            </div>
+                        </div>
+                        
+                        <p class="company-description">
+                            Cadena de farmacias líder en Perú con presencia nacional. 
+                            Innovación en logística y tecnología farmacéutica.
+                        </p>
+                        
+                        <div class="company-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">32</div>
+                                <div class="stat-label">Egresados UTP</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">78%</div>
+                                <div class="stat-label">Match IA</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">5</div>
+                                <div class="stat-label">Vacantes Act.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="company-actions">
+                            <button class="btn btn-primary" onclick="viewCompany('inkafarma')">
+                                <i class="fas fa-eye"></i> Ver Perfil
+                            </button>
+                            <button class="btn btn-secondary" onclick="followCompany('inkafarma')">
+                                <i class="fas fa-plus"></i> Seguir
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Más empresas -->
+                    <div class="company-card">
+                        <div class="company-header">
+                            <div class="company-logo" style="background: linear-gradient(135deg, #FF9A8B, #FF6A88);">
+                                BS
+                            </div>
+                            <div class="company-badges">
+                                <span class="company-badge">💼 6 vacantes</span>
+                            </div>
+                        </div>
+                        
+                        <h3 class="company-name">Banco Santander</h3>
+                        <p class="company-industry">Banca • Servicios Financieros</p>
+                        
+                        <div class="company-meta">
+                            <div class="company-meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Lima, Surco</span>
+                            </div>
+                            <div class="company-meta-item">
+                                <i class="fas fa-users"></i>
+                                <span>2000+ empleados</span>
+                            </div>
+                            <div class="company-meta-item">
+                                <i class="fas fa-star"></i>
+                                <span>4.5/5 (29 reviews)</span>
+                            </div>
+                        </div>
+                        
+                        <p class="company-description">
+                            Entidad financiera global con fuerte presencia en Perú. 
+                            Líder en banca digital y transformación tecnológica.
+                        </p>
+                        
+                        <div class="company-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">15</div>
+                                <div class="stat-label">Egresados UTP</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">82%</div>
+                                <div class="stat-label">Match IA</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">6</div>
+                                <div class="stat-label">Vacantes Act.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="company-actions">
+                            <button class="btn btn-primary" onclick="viewCompany('santander')">
+                                <i class="fas fa-eye"></i> Ver Perfil
+                            </button>
+                            <button class="btn btn-secondary" onclick="followCompany('santander')">
+                                <i class="fas fa-plus"></i> Seguir
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="company-card">
+                        <div class="company-header">
+                            <div class="company-logo" style="background: linear-gradient(135deg, #A8FF78, #78FFD6);">
+                                MS
+                            </div>
+                            <div class="company-badges">
+                                <span class="company-badge alianza">Aliada UTP</span>
+                                <span class="company-badge">💼 10 vacantes</span>
+                            </div>
+                        </div>
+                        
+                        <h3 class="company-name">Microsoft Perú</h3>
+                        <p class="company-industry">Tecnología • Software</p>
+                        
+                        <div class="company-meta">
+                            <div class="company-meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Lima, San Borja</span>
+                            </div>
+                            <div class="company-meta-item">
+                                <i class="fas fa-users"></i>
+                                <span>800+ empleados</span>
+                            </div>
+                            <div class="company-meta-item">
+                                <i class="fas fa-star"></i>
+                                <span>4.9/5 (67 reviews)</span>
+                            </div>
+                        </div>
+                        
+                        <p class="company-description">
+                            Líder mundial en software, servicios y soluciones tecnológicas. 
+                            Programa especial de prácticas para talento UTP.
+                        </p>
+                        
+                        <div class="company-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">28</div>
+                                <div class="stat-label">Egresados UTP</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">95%</div>
+                                <div class="stat-label">Match IA</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">10</div>
+                                <div class="stat-label">Vacantes Act.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="company-actions">
+                            <button class="btn btn-primary" onclick="viewCompany('microsoft')">
+                                <i class="fas fa-eye"></i> Ver Perfil
+                            </button>
+                            <button class="btn btn-secondary" onclick="followCompany('microsoft')">
+                                <i class="fas fa-plus"></i> Seguir
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="company-card">
+                        <div class="company-header">
+                            <div class="company-logo" style="background: linear-gradient(135deg, #FD746C, #FF9068);">
+                                TS
+                            </div>
+                            <div class="company-badges">
+                                <span class="company-badge">💼 7 vacantes</span>
+                            </div>
+                        </div>
+                        
+                        <h3 class="company-name">Tech Solutions</h3>
+                        <p class="company-industry">Tecnología • Desarrollo Software</p>
+                        
+                        <div class="company-meta">
+                            <div class="company-meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Remoto</span>
+                            </div>
+                            <div class="company-meta-item">
+                                <i class="fas fa-users"></i>
+                                <span>150+ empleados</span>
+                            </div>
+                            <div class="company-meta-item">
+                                <i class="fas fa-star"></i>
+                                <span>4.7/5 (31 reviews)</span>
+                            </div>
+                        </div>
+                        
+                        <p class="company-description">
+                            Consultora tecnológica especializada en desarrollo de software 
+                            a medida y soluciones digitales innovadoras.
+                        </p>
+                        
+                        <div class="company-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">12</div>
+                                <div class="stat-label">Egresados UTP</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">88%</div>
+                                <div class="stat-label">Match IA</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">7</div>
+                                <div class="stat-label">Vacantes Act.</div>
+                            </div>
+                        </div>
+                        
+                        <div class="company-actions">
+                            <button class="btn btn-primary" onclick="viewCompany('techsolutions')">
+                                <i class="fas fa-eye"></i> Ver Perfil
+                            </button>
+                            <button class="btn btn-secondary" onclick="followCompany('techsolutions')">
+                                <i class="fas fa-plus"></i> Seguir
+                            </button>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Pagination -->
+                <div class="pagination">
+                    <li class="page-item">
+                        <a href="#" class="page-link"><i class="fas fa-chevron-left"></i></a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link active">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link"><i class="fas fa-chevron-right"></i></a>
+                    </li>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Funcionalidad de búsqueda
+            const searchButton = document.getElementById('search-button');
+            const clearButton = document.getElementById('clear-filters');
+            
+            searchButton.addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Buscando...';
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-search"></i> Buscar Empresas';
+                    showNotification('Búsqueda completada. Se encontraron 48 empresas.');
+                }, 1500);
+            });
+            
+            clearButton.addEventListener('click', function() {
+                const selects = document.querySelectorAll('.filter-select');
+                selects.forEach(select => {
+                    select.selectedIndex = 0;
+                });
+                showNotification('Filtros limpiados correctamente');
+            });
+            
+            // Funcionalidad de seguir empresa
+            const followButtons = document.querySelectorAll('.company-actions .btn-secondary');
+            followButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const companyCard = this.closest('.company-card');
+                    const companyName = companyCard.querySelector('.company-name').textContent;
+                    
+                    if (this.innerHTML.includes('Seguir')) {
+                        this.innerHTML = '<i class="fas fa-check"></i> Siguiendo';
+                        this.classList.remove('btn-secondary');
+                        this.classList.add('btn-success');
+                        showNotification(`Ahora sigues a ${companyName}`);
+                    } else {
+                        this.innerHTML = '<i class="fas fa-plus"></i> Seguir';
+                        this.classList.remove('btn-success');
+                        this.classList.add('btn-secondary');
+                        showNotification(`Dejaste de seguir a ${companyName}`);
+                    }
+                });
+            });
+        });
+
+        function viewCompany(companyId) {
+            // Simular navegación al perfil de la empresa
+            showNotification(`Redirigiendo al perfil de la empresa...`);
+            // En una implementación real, aquí iría: window.location.href = `empresa-detalle.html?id=${companyId}`;
+        }
+
+        function followCompany(companyId) {
+            // La funcionalidad está implementada en el event listener anterior
+            // Esta función se mantiene por compatibilidad con los onclick
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--success);
+                color: white;
+                padding: 15px 20px;
+                border-radius: var(--radius);
+                box-shadow: var(--shadow);
+                z-index: 1001;
+                animation: slideIn 0.5s ease;
+            `;
+            notification.innerHTML = `
+                <i class="fas fa-check-circle"></i> ${message}
+            `;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.5s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 500);
+            }, 4000);
+        }
+
+        // Agregar estilos de animación
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+            
+            .btn-light {
+                background: rgba(255, 255, 255, 0.2);
+                color: white;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+            }
+            
+            .btn-light:hover {
+                background: rgba(255, 255, 255, 0.3);
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

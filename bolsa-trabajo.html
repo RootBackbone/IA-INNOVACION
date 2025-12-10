@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bolsa de Trabajo - UTP Empleabilidad</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --warning: #f8961e;
+            --info: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, #4361ee, #3a0ca3);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: var(--radius);
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--white);
+            color: var(--white);
+        }
+
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 25px;
+            padding: 25px 0;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .sidebar-menu i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Job Search Section */
+        .job-search-section {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+        }
+
+        .search-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .search-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .search-filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-label {
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .filter-select, .filter-input {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-select:focus, .filter-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            outline: none;
+        }
+
+        .search-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        /* Job Listings */
+        .job-listings {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .job-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--primary);
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-card.featured {
+            border-left: 4px solid var(--warning);
+            background: linear-gradient(to right, #fff9e6, white);
+        }
+
+        .job-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .job-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        .job-company {
+            font-size: 1.1rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .job-badge {
+            background: var(--primary);
+            color: var(--white);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .job-badge.featured {
+            background: var(--warning);
+        }
+
+        .job-badge.urgent {
+            background: var(--danger);
+        }
+
+        .job-badge.match-high {
+            background: #2ecc71;
+        }
+
+        .job-badge.match-medium {
+            background: #f39c12;
+        }
+
+        .job-badge.match-low {
+            background: #e74c3c;
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .job-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .job-description {
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .job-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .skill-tag {
+            background: var(--light);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--dark);
+        }
+
+        .job-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .btn-success:hover {
+            background: #3aa8d0;
+        }
+
+        /* Job Detail Modal */
+        .job-detail-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .modal-header {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .modal-company {
+            font-size: 1.3rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .modal-meta {
+            display: flex;
+            gap: 20px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .modal-section {
+            margin-bottom: 25px;
+        }
+
+        .modal-section h3 {
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 10px;
+        }
+
+        .page-item {
+            list-style: none;
+        }
+
+        .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius);
+            background: var(--white);
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .page-link:hover, .page-link.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .search-filters {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .job-card-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .job-actions {
+                justify-content: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h1>UTP Empleabilidad</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="dashboard-ia.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                        <li><a href="bolsa-trabajo.html" class="active"><i class="fas fa-briefcase"></i> Bolsa de Trabajo</a></li>
+                        <li><a href="eventos.html"><i class="fas fa-calendar-alt"></i> Eventos</a></li>
+                        <li><a href="mi-cv.html"><i class="fas fa-file-alt"></i> Mi CV</a></li>
+                        <li><a href="estadisticas.html"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
+                    </ul>
+                </nav>
+                <div class="user-actions">
+                    <a href="perfil.html" class="btn btn-primary"><i class="fas fa-user"></i> Mi Perfil</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <aside class="sidebar">
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard-ia.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="bolsa-trabajo.html" class="active"><i class="fas fa-briefcase"></i> Bolsa de Trabajo</a></li>
+                    <li><a href="eventos.html"><i class="fas fa-calendar-alt"></i> Eventos</a></li>
+                    <li><a href="mi-cv.html"><i class="fas fa-file-alt"></i> Mi CV</a></li>
+                    <li><a href="empresas.html"><i class="fas fa-building"></i> Empresas</a></li>
+                    <li><a href="mentoria.html"><i class="fas fa-users"></i> Mentoría</a></li>
+                    <li><a href="estadisticas.html"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
+                </ul>
+            </aside>
+
+            <main>
+                <section class="job-search-section">
+                    <div class="search-header">
+                        <h2 class="search-title">Encuentra tu trabajo ideal</h2>
+                        <div class="search-results">
+                            <span id="job-count">3 ofertas disponibles</span>
+                        </div>
+                    </div>
+                    
+                    <div class="search-filters">
+                        <div class="filter-group">
+                            <label class="filter-label">Palabras clave</label>
+                            <input type="text" class="filter-input" placeholder="Puesto, empresa o palabra clave" id="keyword-filter">
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">Ubicación</label>
+                            <select class="filter-select" id="location-filter">
+                                <option value="">Cualquier ubicación</option>
+                                <option value="lima">Lima</option>
+                                <option value="arequipa">Arequipa</option>
+                                <option value="trujillo">Trujillo</option>
+                                <option value="cusco">Cusco</option>
+                                <option value="remoto">Remoto</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">Tipo de trabajo</label>
+                            <select class="filter-select" id="type-filter">
+                                <option value="">Cualquier tipo</option>
+                                <option value="tiempo-completo">Tiempo completo</option>
+                                <option value="medio-tiempo">Medio tiempo</option>
+                                <option value="practicas">Práctica</option>
+                                <option value="freelance">Freelance</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label class="filter-label">Área</label>
+                            <select class="filter-select" id="area-filter">
+                                <option value="">Cualquier área</option>
+                                <option value="tecnologia">Tecnología</option>
+                                <option value="administracion">Administración</option>
+                                <option value="marketing">Marketing</option>
+                                <option value="finanzas">Finanzas</option>
+                                <option value="ingenieria">Ingeniería</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="search-actions">
+                        <button class="btn btn-secondary" id="clear-filters">
+                            <i class="fas fa-times"></i> Limpiar
+                        </button>
+                        <button class="btn btn-primary" id="search-button">
+                            <i class="fas fa-search"></i> Buscar
+                        </button>
+                    </div>
+                </section>
+                
+                <section class="job-listings" id="job-listings">
+                    <!-- Los trabajos se cargan dinámicamente aquí -->
+                </section>
+                
+                <div class="pagination">
+                    <li class="page-item">
+                        <a href="#" class="page-link"><i class="fas fa-chevron-left"></i></a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link active">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a href="#" class="page-link"><i class="fas fa-chevron-right"></i></a>
+                    </li>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal para detalles del trabajo -->
+    <div class="job-detail-modal" id="job-detail-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-modal">&times;</button>
+            <div class="modal-header" id="modal-header">
+                <!-- Contenido cargado dinámicamente -->
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Contenido cargado dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Datos de empleos (coinciden con los del dashboard IA)
+        const jobs = [
+            {
+                id: 'ibm-practicas',
+                title: 'Prácticas en Desarrollo de Software',
+                company: 'IBM',
+                type: 'Práctica',
+                location: 'Lima',
+                salary: 'S/ 1800',
+                skills: ['Python', 'Java', 'SQL'],
+                description: 'Práctica profesional en desarrollo de software con tecnologías modernas. Ideal para estudiantes de últimos ciclos de ingeniería.',
+                requirements: 'Estudiante de últimos ciclos de Ingeniería de Software, Sistemas o afines. Conocimientos en Python, Java y SQL.',
+                responsibilities: 'Desarrollo de componentes de software, participación en reuniones de equipo, implementación de funcionalidades bajo supervisión.',
+                benefits: 'Capacitación en tecnologías IBM, certificación oficial, posibilidad de contratación posterior.',
+                match: 77,
+                featured: false,
+                urgent: false,
+                posted: '2023-11-10'
+            },
+            {
+                id: 'inkafarma-analista',
+                title: 'Analista de Datos Jr',
+                company: 'Inkafarma',
+                type: 'Tiempo completo',
+                location: 'Lima',
+                salary: 'S/ 2800',
+                skills: ['Python', 'SQL', 'Machine Learning'],
+                description: 'Analista de datos junior para el área de business intelligence. Trabajarás con grandes volúmenes de datos para generar insights.',
+                requirements: 'Conocimientos sólidos en Python, SQL y Machine Learning. Experiencia en análisis de datos y visualización.',
+                responsibilities: 'Análisis de datos de ventas, creación de dashboards, reportes para la gerencia, limpieza y preparación de datos.',
+                benefits: 'Seguro de salud, bonos por desempeño, horario flexible, capacitaciones técnicas.',
+                match: 85,
+                featured: true,
+                urgent: true,
+                posted: '2023-11-12'
+            },
+            {
+                id: 'manpower-analista',
+                title: 'Analista Junior de Datos',
+                company: 'Manpower',
+                type: 'Tiempo completo',
+                location: 'Lima',
+                salary: 'S/ 2500',
+                skills: ['SQL', 'Power BI', 'Python'],
+                description: 'Analista junior de datos para proyectos de clientes diversos. Oportunidad de crecimiento en consultoría de datos.',
+                requirements: 'Conocimientos en SQL, Power BI y Python. Capacidad analítica y de resolución de problemas.',
+                responsibilities: 'Análisis de datos de clientes, creación de reportes en Power BI, soporte en proyectos de consultoría.',
+                benefits: 'Capacitación continua, oportunidades de crecimiento, ambiente de trabajo dinámico.',
+                match: 38,
+                featured: false,
+                urgent: false,
+                posted: '2023-11-08'
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const jobListings = document.getElementById('job-listings');
+            const jobCount = document.getElementById('job-count');
+            const modal = document.getElementById('job-detail-modal');
+            const closeModal = document.getElementById('close-modal');
+            const modalHeader = document.getElementById('modal-header');
+            const modalBody = document.getElementById('modal-body');
+            
+            // Verificar si hay un trabajo específico seleccionado desde el dashboard
+            const selectedJobId = localStorage.getItem('selectedJob');
+            
+            // Cargar trabajos
+            function loadJobs(filteredJobs = jobs) {
+                jobListings.innerHTML = '';
+                jobCount.textContent = `${filteredJobs.length} ofertas disponibles`;
+                
+                filteredJobs.forEach(job => {
+                    const jobCard = createJobCard(job);
+                    jobListings.appendChild(jobCard);
+                });
+                
+                // Si hay un trabajo seleccionado, mostrar sus detalles
+                if (selectedJobId) {
+                    const job = jobs.find(j => j.id === selectedJobId);
+                    if (job) {
+                        showJobDetails(job);
+                    }
+                    // Limpiar el localStorage después de usar
+                    localStorage.removeItem('selectedJob');
+                }
+            }
+            
+            // Crear tarjeta de trabajo
+            function createJobCard(job) {
+                const jobCard = document.createElement('div');
+                jobCard.className = 'job-card';
+                if (job.featured) jobCard.classList.add('featured');
+                
+                // Determinar clase de badge según el match
+                let matchClass = 'match-low';
+                if (job.match >= 70) matchClass = 'match-high';
+                else if (job.match >= 50) matchClass = 'match-medium';
+                
+                jobCard.innerHTML = `
+                    <div class="job-card-header">
+                        <div>
+                            <h3 class="job-title">${job.title}</h3>
+                            <p class="job-company">${job.company}</p>
+                        </div>
+                        <div class="job-badge ${matchClass}">${job.match}% match</div>
+                    </div>
+                    
+                    <div class="job-meta">
+                        <div class="job-meta-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${job.location}</span>
+                        </div>
+                        <div class="job-meta-item">
+                            <i class="fas fa-clock"></i>
+                            <span>${job.type}</span>
+                        </div>
+                        <div class="job-meta-item">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <span>${job.salary}</span>
+                        </div>
+                        <div class="job-meta-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Publicado hace ${getDaysAgo(job.posted)} días</span>
+                        </div>
+                    </div>
+                    
+                    <p class="job-description">${job.description}</p>
+                    
+                    <div class="job-skills">
+                        ${job.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+                    </div>
+                    
+                    <div class="job-actions">
+                        <button class="btn btn-secondary save-job">
+                            <i class="far fa-heart"></i> Guardar
+                        </button>
+                        <button class="btn btn-primary view-details" data-job-id="${job.id}">
+                            <i class="fas fa-eye"></i> Ver Detalles
+                        </button>
+                        <button class="btn btn-success apply-job">
+                            <i class="fas fa-paper-plane"></i> Aplicar
+                        </button>
+                    </div>
+                `;
+                
+                return jobCard;
+            }
+            
+            // Mostrar detalles del trabajo en modal
+            function showJobDetails(job) {
+                modalHeader.innerHTML = `
+                    <h2 class="modal-title">${job.title}</h2>
+                    <p class="modal-company">${job.company}</p>
+                    <div class="modal-meta">
+                        <div class="job-meta-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${job.location}</span>
+                        </div>
+                        <div class="job-meta-item">
+                            <i class="fas fa-clock"></i>
+                            <span>${job.type}</span>
+                        </div>
+                        <div class="job-meta-item">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <span>${job.salary}</span>
+                        </div>
+                        <div class="job-meta-item">
+                            <i class="fas fa-percentage"></i>
+                            <span>${job.match}% de coincidencia con tu perfil</span>
+                        </div>
+                    </div>
+                `;
+                
+                modalBody.innerHTML = `
+                    <div class="modal-section">
+                        <h3>Descripción del Puesto</h3>
+                        <p>${job.description}</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Requisitos</h3>
+                        <p>${job.requirements}</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Responsabilidades</h3>
+                        <p>${job.responsibilities}</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Beneficios</h3>
+                        <p>${job.benefits}</p>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>Habilidades Requeridas</h3>
+                        <div class="job-skills">
+                            ${job.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="job-actions" style="margin-top: 30px;">
+                        <button class="btn btn-secondary save-job">
+                            <i class="far fa-heart"></i> Guardar
+                        </button>
+                        <button class="btn btn-primary apply-job-modal">
+                            <i class="fas fa-paper-plane"></i> Aplicar Ahora
+                        </button>
+                    </div>
+                `;
+                
+                modal.style.display = 'flex';
+                
+                // Agregar eventos a los botones del modal
+                document.querySelector('.apply-job-modal').addEventListener('click', function() {
+                    applyToJob(job);
+                });
+                
+                document.querySelector('.save-job').addEventListener('click', function() {
+                    toggleSaveJob(job, this);
+                });
+            }
+            
+            // Función auxiliar para calcular días desde publicación
+            function getDaysAgo(dateString) {
+                const postedDate = new Date(dateString);
+                const today = new Date();
+                const diffTime = Math.abs(today - postedDate);
+                return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            }
+            
+            // Filtrar trabajos
+            function filterJobs() {
+                const keyword = document.getElementById('keyword-filter').value.toLowerCase();
+                const location = document.getElementById('location-filter').value;
+                const type = document.getElementById('type-filter').value;
+                const area = document.getElementById('area-filter').value;
+                
+                const filtered = jobs.filter(job => {
+                    const matchesKeyword = 
+                        job.title.toLowerCase().includes(keyword) ||
+                        job.company.toLowerCase().includes(keyword) ||
+                        job.skills.some(skill => skill.toLowerCase().includes(keyword)) ||
+                        job.description.toLowerCase().includes(keyword);
+                    
+                    const matchesLocation = !location || job.location.toLowerCase() === location;
+                    const matchesType = !type || job.type.toLowerCase().replace(' ', '-') === type;
+                    
+                    // Asignación simple de área basada en habilidades
+                    let matchesArea = true;
+                    if (area) {
+                        if (area === 'tecnologia') {
+                            matchesArea = job.skills.some(skill => 
+                                ['Python', 'Java', 'SQL', 'Machine Learning', 'Power BI'].includes(skill)
+                            );
+                        }
+                        // Podríamos expandir esta lógica para otras áreas
+                    }
+                    
+                    return matchesKeyword && matchesLocation && matchesType && matchesArea;
+                });
+                
+                loadJobs(filtered);
+            }
+            
+            // Aplicar a un trabajo
+            function applyToJob(job) {
+                const applyButton = document.querySelector('.apply-job-modal');
+                applyButton.innerHTML = '<i class="fas fa-check"></i> Aplicado';
+                applyButton.classList.remove('btn-primary');
+                applyButton.classList.add('btn-success');
+                applyButton.disabled = true;
+                
+                showNotification(`Has aplicado a: ${job.title} en ${job.company}`);
+                
+                // Cerrar modal después de un tiempo
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 2000);
+            }
+            
+            // Alternar guardar trabajo
+            function toggleSaveJob(job, button) {
+                const icon = button.querySelector('i');
+                if (icon.classList.contains('far')) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                    button.innerHTML = '<i class="fas fa-heart"></i> Guardado';
+                    button.style.color = '#f72585';
+                    showNotification(`Has guardado: ${job.title}`);
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                    button.innerHTML = '<i class="far fa-heart"></i> Guardar';
+                    button.style.color = '';
+                    showNotification(`Has quitado: ${job.title} de guardados`);
+                }
+            }
+            
+            // Mostrar notificación
+            function showNotification(message) {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: var(--success);
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: var(--radius);
+                    box-shadow: var(--shadow);
+                    z-index: 1001;
+                    animation: slideIn 0.5s ease;
+                `;
+                notification.innerHTML = `
+                    <i class="fas fa-check-circle"></i> ${message}
+                `;
+                document.body.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.5s ease';
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 500);
+                }, 4000);
+            }
+            
+            // Event Listeners
+            document.getElementById('search-button').addEventListener('click', filterJobs);
+            
+            document.getElementById('clear-filters').addEventListener('click', function() {
+                document.getElementById('keyword-filter').value = '';
+                document.getElementById('location-filter').selectedIndex = 0;
+                document.getElementById('type-filter').selectedIndex = 0;
+                document.getElementById('area-filter').selectedIndex = 0;
+                loadJobs();
+            });
+            
+            closeModal.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+            
+            // Cerrar modal al hacer clic fuera
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Delegación de eventos para botones dinámicos
+            jobListings.addEventListener('click', function(e) {
+                if (e.target.closest('.view-details')) {
+                    const jobId = e.target.closest('.view-details').getAttribute('data-job-id');
+                    const job = jobs.find(j => j.id === jobId);
+                    if (job) showJobDetails(job);
+                }
+                
+                if (e.target.closest('.save-job')) {
+                    const jobCard = e.target.closest('.job-card');
+                    const jobTitle = jobCard.querySelector('.job-title').textContent;
+                    const job = jobs.find(j => j.title === jobTitle);
+                    if (job) toggleSaveJob(job, e.target.closest('.save-job'));
+                }
+                
+                if (e.target.closest('.apply-job')) {
+                    const jobCard = e.target.closest('.job-card');
+                    const jobTitle = jobCard.querySelector('.job-title').textContent;
+                    const job = jobs.find(j => j.title === jobTitle);
+                    if (job) applyToJob(job);
+                    
+                    const applyButton = e.target.closest('.apply-job');
+                    applyButton.innerHTML = '<i class="fas fa-check"></i> Aplicado';
+                    applyButton.classList.remove('btn-primary');
+                    applyButton.classList.add('btn-success');
+                    applyButton.disabled = true;
+                }
+            });
+            
+            // Agregar estilos de animación
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Cargar trabajos al inicio
+            loadJobs();
+        });
+    </script>
+</body>
+</html>

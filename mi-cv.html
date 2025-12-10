@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi CV - UTP Empleabilidad</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --warning: #f8961e;
+            --info: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, #4361ee, #3a0ca3);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: var(--radius);
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--white);
+            color: var(--white);
+        }
+
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 25px;
+            padding: 25px 0;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .sidebar-menu i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* CV Builder */
+        .cv-builder {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 25px;
+        }
+
+        /* CV Form */
+        .cv-form-container {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .progress-container {
+            margin-bottom: 25px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--light);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            width: 75%;
+        }
+
+        .form-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-section {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .form-section:hover {
+            transform: translateX(5px);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-status {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--success);
+        }
+
+        .section-status.incomplete {
+            background: var(--warning);
+        }
+
+        .section-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .form-control {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+            outline: none;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .skill-input-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .skill-tag {
+            background: var(--primary);
+            color: var(--white);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .skill-tag .remove {
+            cursor: pointer;
+            font-size: 0.7rem;
+        }
+
+        .add-btn {
+            background: var(--success);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius);
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-btn:hover {
+            background: #3aa8d0;
+        }
+
+        /* CV Preview */
+        .cv-preview-container {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            min-height: 800px;
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+
+        .preview-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .preview-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .btn-success:hover {
+            background: #3aa8d0;
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: var(--white);
+        }
+
+        .btn-warning:hover {
+            background: #e07c0c;
+        }
+
+        .cv-preview {
+            background: var(--white);
+            border: 1px solid #e9ecef;
+            border-radius: var(--radius);
+            min-height: 700px;
+            padding: 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        /* CV Template Styles */
+        .cv-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .cv-personal {
+            flex: 1;
+        }
+
+        .cv-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .cv-title {
+            font-size: 1.2rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .cv-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .cv-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+        }
+
+        .cv-section {
+            margin-bottom: 25px;
+        }
+
+        .section-title-cv {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .experience-item, .education-item {
+            margin-bottom: 20px;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .item-title {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .item-date {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .item-subtitle {
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .item-description {
+            color: var(--dark);
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-item {
+            background: var(--light);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Templates Gallery */
+        .templates-section {
+            margin-top: 30px;
+        }
+
+        .templates-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .template-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .template-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .template-card.active {
+            border-color: var(--primary);
+        }
+
+        .template-preview {
+            height: 250px;
+            background: var(--light);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .template-name {
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .cv-builder {
+                grid-template-columns: 1fr;
+            }
+            
+            .cv-form-container {
+                position: static;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .cv-header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .preview-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .preview-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h1>UTP Empleabilidad</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="dashboard-ia.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                        <li><a href="bolsa-trabajo.html"><i class="fas fa-briefcase"></i> Bolsa de Trabajo</a></li>
+                        <li><a href="eventos.html"><i class="fas fa-calendar-alt"></i> Eventos</a></li>
+                        <li><a href="mi-cv.html" class="active"><i class="fas fa-file-alt"></i> Mi CV</a></li>
+                        <li><a href="estadisticas.html"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
+                    </ul>
+                </nav>
+                <div class="user-actions">
+              
+                    <a href="perfil.html" class="btn btn-primary"><i class="fas fa-user"></i> Mi Perfil</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <aside class="sidebar">
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard-ia.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="bolsa-trabajo.html"><i class="fas fa-briefcase"></i> Bolsa de Trabajo</a></li>
+                    <li><a href="eventos.html"><i class="fas fa-calendar-alt"></i> Eventos</a></li>
+                    <li><a href="mi-cv.html" class="active"><i class="fas fa-file-alt"></i> Mi CV</a></li>
+                    <li><a href="empresas.html"><i class="fas fa-building"></i> Empresas</a></li>
+                    <li><a href="mentoria.html"><i class="fas fa-users"></i> Mentoría</a></li>
+                    <li><a href="estadisticas.html"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
+                </ul>
+            </aside>
+
+            <main>
+                <div class="cv-builder">
+                    <div class="cv-form-container">
+                        <div class="form-header">
+                            <h2 class="form-title">Constructor de CV</h2>
+                            <div class="form-actions">
+                                <button class="btn btn-primary" id="save-cv">
+                                    <i class="fas fa-save"></i> Guardar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="progress-container">
+                            <div class="progress-info">
+                                <span>Completado</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-sections">
+                            <!-- Información Personal -->
+                            <div class="form-section">
+                                <div class="section-header">
+                                    <h3 class="section-title">
+                                        <i class="fas fa-user"></i> Información Personal
+                                    </h3>
+                                    <div class="section-status"></div>
+                                </div>
+                                <div class="section-content">
+                                    <div class="form-group">
+                                        <label class="form-label">Nombre Completo</label>
+                                        <input type="text" class="form-control" id="full-name" value="Mario Aponte Matos">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Título Profesional</label>
+                                        <input type="text" class="form-control" id="professional-title" value="Ingeniera de Sistemas">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" value="mario.aponte@utp.edu.pe">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Teléfono</label>
+                                        <input type="tel" class="form-control" id="phone" value="+51 987 654 321">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Ubicación</label>
+                                        <input type="text" class="form-control" id="location" value="Lima, Perú">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">LinkedIn</label>
+                                        <input type="url" class="form-control" id="linkedin" value="linkedin.com/in/marioaponte">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Experiencia Laboral -->
+                            <div class="form-section">
+                                <div class="section-header">
+                                    <h3 class="section-title">
+                                        <i class="fas fa-briefcase"></i> Experiencia Laboral
+                                    </h3>
+                                    <div class="section-status"></div>
+                                </div>
+                                <div class="section-content">
+                                    <div class="form-group">
+                                        <label class="form-label">Puesto</label>
+                                        <input type="text" class="form-control" value="Desarrolladora Frontend">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Empresa</label>
+                                        <input type="text" class="form-control" value="Tech Solutions S.A.">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Fecha de Inicio - Fecha de Fin</label>
+                                        <div style="display: flex; gap: 10px;"> 
+                                            <input type="month" class="form-control" value="2022-03">
+                                            <input type="month" class="form-control" value="2023-08">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Descripción</label>
+                                        <textarea class="form-control form-textarea">Desarrollo de interfaces de usuario utilizando React.js y TypeScript. Colaboración con el equipo de diseño para implementar diseños responsivos. Participación en code reviews y mejora de procesos de desarrollo.</textarea>
+                                    </div>
+                                    <button class="add-btn">
+                                        <i class="fas fa-plus"></i> Agregar Experiencia
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Educación -->
+                            <div class="form-section">
+                                <div class="section-header">
+                                    <h3 class="section-title">
+                                        <i class="fas fa-graduation-cap"></i> Educación
+                                    </h3>
+                                    <div class="section-status"></div>
+                                </div>
+                                <div class="section-content">
+                                    <div class="form-group">
+                                        <label class="form-label">Título</label>
+                                        <input type="text" class="form-control" value="Ingeniería de Sistemas">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Institución</label>
+                                        <input type="text" class="form-control" value="Universidad Tecnológica del Perú">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Fecha de Inicio - Fecha de Fin</label>
+                                        <div style="display: flex; gap: 10px;">
+                                            <input type="month" class="form-control" value="2018-03">
+                                            <input type="month" class="form-control" value="2022-12">
+                                        </div>
+                                    </div>
+                                    <button class="add-btn">
+                                        <i class="fas fa-plus"></i> Agregar Educación
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Habilidades -->
+                            <div class="form-section">
+                                <div class="section-header">
+                                    <h3 class="section-title">
+                                        <i class="fas fa-tools"></i> Habilidades
+                                    </h3>
+                                    <div class="section-status incomplete"></div>
+                                </div>
+                                <div class="section-content">
+                                    <div class="form-group">
+                                        <label class="form-label">Agregar Habilidad</label>
+                                        <div class="skill-input-container">
+                                            <input type="text" class="form-control" id="skill-input" placeholder="Ej: JavaScript">
+                                            <button class="add-btn" id="add-skill">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <div class="skill-tags" id="skill-tags">
+                                            <span class="skill-tag">
+                                                JavaScript <span class="remove" onclick="removeSkill(this)">×</span>
+                                            </span>
+                                            <span class="skill-tag">
+                                                React <span class="remove" onclick="removeSkill(this)">×</span>
+                                            </span>
+                                            <span class="skill-tag">
+                                                HTML/CSS <span class="remove" onclick="removeSkill(this)">×</span>
+                                            </span>
+                                            <span class="skill-tag">
+                                                Git <span class="remove" onclick="removeSkill(this)">×</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Idiomas -->
+                            <div class="form-section">
+                                <div class="section-header">
+                                    <h3 class="section-title">
+                                        <i class="fas fa-language"></i> Idiomas
+                                    </h3>
+                                    <div class="section-status incomplete"></div>
+                                </div>
+                                <div class="section-content">
+                                    <div class="form-group">
+                                        <label class="form-label">Idioma</label>
+                                        <select class="form-control">
+                                            <option>Español - Nativo</option>
+                                            <option>Inglés - Avanzado</option>
+                                            <option>Portugués - Básico</option>
+                                        </select>
+                                    </div>
+                                    <button class="add-btn">
+                                        <i class="fas fa-plus"></i> Agregar Idioma
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cv-preview-container">
+                        <div class="preview-header">
+                            <h2 class="preview-title">Vista Previa del CV</h2>
+                            <div class="preview-actions">
+                                <button class="btn btn-warning" id="download-pdf">
+                                    <i class="fas fa-file-pdf"></i> Descargar PDF
+                                </button>
+                                <button class="btn btn-success" id="share-cv">
+                                    <i class="fas fa-share-alt"></i> Compartir
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="cv-preview">
+                            <!-- CV Template -->
+                            <div class="cv-header">
+                                <div class="cv-personal">
+                                    <h1 class="cv-name" id="preview-name">Mario Aponte Matos</h1>
+                                    <h2 class="cv-title" id="preview-title">Ingeniera de Sistemas</h2>
+                                    <div class="cv-contact">
+                                        <div class="contact-item">
+                                            <i class="fas fa-envelope"></i>
+                                            <span id="preview-email">mario.aponte@utp.edu.pe</span>
+                                        </div>
+                                        <div class="contact-item">
+                                            <i class="fas fa-phone"></i>
+                                            <span id="preview-phone">+51 987 654 321</span>
+                                        </div>
+                                        <div class="contact-item">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <span id="preview-location">Lima, Perú</span>
+                                        </div>
+                                        <div class="contact-item">
+                                            <i class="fab fa-linkedin"></i>
+                                            <span id="preview-linkedin">linkedin.com/in/marioaponte</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cv-photo-container">
+                                    <div class="cv-photo-placeholder">
+                                        <i class="fas fa-user" style="font-size: 3rem; color: #ccc;"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="cv-section">
+                                <h3 class="section-title-cv">Resumen Profesional</h3>
+                                <p>Ingeniera de Sistemas con 2 años de experiencia en desarrollo frontend. Especializada en React.js y TypeScript. Apasionada por crear interfaces de usuario intuitivas y eficientes. Busco oportunidades para contribuir en proyectos desafiantes y seguir desarrollando mis habilidades técnicas.</p>
+                            </div>
+
+                            <div class="cv-section">
+                                <h3 class="section-title-cv">Experiencia Laboral</h3>
+                                <div class="experience-item">
+                                    <div class="item-header">
+                                        <div class="item-title">Desarrolladora Frontend</div>
+                                        <div class="item-date">Mar 2022 - Ago 2023</div>
+                                    </div>
+                                    <div class="item-subtitle">Tech Solutions S.A.</div>
+                                    <div class="item-description">
+                                        <p>Desarrollo de interfaces de usuario utilizando React.js y TypeScript. Colaboración con el equipo de diseño para implementar diseños responsivos. Participación en code reviews y mejora de procesos de desarrollo.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="cv-section">
+                                <h3 class="section-title-cv">Educación</h3>
+                                <div class="education-item">
+                                    <div class="item-header">
+                                        <div class="item-title">Ingeniería de Sistemas</div>
+                                        <div class="item-date">Mar 2018 - Dic 2022</div>
+                                    </div>
+                                    <div class="item-subtitle">Universidad Tecnológica del Perú</div>
+                                </div>
+                            </div>
+
+                            <div class="cv-section">
+                                <h3 class="section-title-cv">Habilidades Técnicas</h3>
+                                <div class="skills-list">
+                                    <span class="skill-item">JavaScript</span>
+                                    <span class="skill-item">React</span>
+                                    <span class="skill-item">HTML/CSS</span>
+                                    <span class="skill-item">Git</span>
+                                    <span class="skill-item">TypeScript</span>
+                                    <span class="skill-item">Responsive Design</span>
+                                </div>
+                            </div>
+
+                            <div class="cv-section">
+                                <h3 class="section-title-cv">Idiomas</h3>
+                                <div class="skills-list">
+                                    <span class="skill-item">Español - Nativo</span>
+                                    <span class="skill-item">Inglés - Avanzado</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Templates Gallery -->
+                        <div class="templates-section">
+                            <h3 class="templates-title">Plantillas de CV</h3>
+                            <div class="templates-grid">
+                                <div class="template-card active">
+                                    <div class="template-preview">
+                                        Moderno
+                                    </div>
+                                    <div class="template-name">Moderno</div>
+                                </div>
+                                <div class="template-card">
+                                    <div class="template-preview">
+                                        Clásico
+                                    </div>
+                                    <div class="template-name">Clásico</div>
+                                </div>
+                                <div class="template-card">
+                                    <div class="template-preview">
+                                        Creativo
+                                    </div>
+                                    <div class="template-name">Creativo</div>
+                                </div>
+                                <div class="template-card">
+                                    <div class="template-preview">
+                                        Ejecutivo
+                                    </div>
+                                    <div class="template-name">Ejecutivo</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Actualizar vista previa en tiempo real
+            const formInputs = document.querySelectorAll('.form-control');
+            formInputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    const previewId = 'preview-' + this.id;
+                    const previewElement = document.getElementById(previewId);
+                    if (previewElement) {
+                        previewElement.textContent = this.value;
+                    }
+                });
+            });
+
+            // Agregar habilidades
+            document.getElementById('add-skill').addEventListener('click', function() {
+                const skillInput = document.getElementById('skill-input');
+                const skillValue = skillInput.value.trim();
+                
+                if (skillValue) {
+                    const skillTags = document.getElementById('skill-tags');
+                    const newSkill = document.createElement('span');
+                    newSkill.className = 'skill-tag';
+                    newSkill.innerHTML = `${skillValue} <span class="remove" onclick="removeSkill(this)">×</span>`;
+                    skillTags.appendChild(newSkill);
+                    skillInput.value = '';
+                    
+                    // Actualizar progreso
+                    updateProgress();
+                }
+            });
+
+            // Permitir agregar habilidades con Enter
+            document.getElementById('skill-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('add-skill').click();
+                }
+            });
+
+            // Funcionalidad de guardar CV
+            document.getElementById('save-cv').addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-save"></i> Guardar';
+                    showNotification('CV guardado exitosamente');
+                }, 1500);
+            });
+
+            // Funcionalidad de descargar PDF
+            document.getElementById('download-pdf').addEventListener('click', function() {
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generando PDF...';
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-file-pdf"></i> Descargar PDF';
+                    showNotification('PDF generado y descargado exitosamente');
+                }, 2000);
+            });
+
+            // Funcionalidad de compartir CV
+            document.getElementById('share-cv').addEventListener('click', function() {
+                showNotification('Enlace de compartir copiado al portapapeles');
+            });
+
+            // Cambiar plantillas
+            const templateCards = document.querySelectorAll('.template-card');
+            templateCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    templateCards.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                    showNotification(`Plantilla "${this.querySelector('.template-name').textContent}" aplicada`);
+                });
+            });
+
+            // Actualizar progreso
+            function updateProgress() {
+                const progressFill = document.querySelector('.progress-fill');
+                const currentWidth = parseInt(progressFill.style.width) || 75;
+                // Simular aumento de progreso
+                if (currentWidth < 100) {
+                    progressFill.style.width = (currentWidth + 5) + '%';
+                    document.querySelector('.progress-info span:last-child').textContent = (currentWidth + 5) + '%';
+                }
+            }
+
+            // Función para mostrar notificaciones
+            function showNotification(message) {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: var(--success);
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: var(--radius);
+                    box-shadow: var(--shadow);
+                    z-index: 1001;
+                    animation: slideIn 0.5s ease;
+                `;
+                notification.innerHTML = `
+                    <i class="fas fa-check-circle"></i> ${message}
+                `;
+                document.body.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.5s ease';
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 500);
+                }, 3000);
+            }
+
+            // Agregar estilos de animación
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+
+        // Función para eliminar habilidades (definida globalmente)
+        function removeSkill(element) {
+            element.parentElement.remove();
+        }
+    </script>
+</body>
+</html>

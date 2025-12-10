@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard IA - UTP Empleabilidad</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --warning: #f8961e;
+            --info: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, #4361ee, #3a0ca3);
+            --gradient-success: linear-gradient(135deg, #4cc9f0, #4895ef);
+            --gradient-warning: linear-gradient(135deg, #f8961e, #f3722c);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fb;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: var(--radius);
+        }
+
+        nav a:hover, nav a.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--white);
+            color: var(--white);
+        }
+
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 25px;
+            padding: 25px 0;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            color: var(--dark);
+            text-decoration: none;
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .sidebar-menu i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Dashboard Content */
+        .dashboard-content {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* Welcome Banner */
+        .welcome-banner {
+            background: var(--gradient);
+            color: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .welcome-icon {
+            font-size: 2.5rem;
+        }
+
+        .welcome-text h2 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .welcome-text p {
+            opacity: 0.9;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ia-badge {
+            background: var(--gradient-warning);
+            color: var(--white);
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: 500;
+        }
+
+        .progress-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .progress-main {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .progress-bar-container {
+            background: var(--light);
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: var(--gradient);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .progress-stats {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .recommendation-card {
+            background: var(--gradient-success);
+            color: var(--white);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .match-badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--white);
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .action-btn {
+            background: var(--white);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            border-radius: var(--radius);
+            padding: 20px 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .action-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-3px);
+            text-decoration: none;
+        }
+
+        .action-icon {
+            font-size: 2rem;
+        }
+
+        /* Analysis Dashboard */
+        .analysis-dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .analysis-section {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .skills-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .skill-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background: var(--light);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .recommendations-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .recommendation-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px;
+            background: var(--light);
+            border-radius: var(--radius);
+        }
+
+        .recommendation-icon {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: var(--radius);
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 20px;
+            border-radius: var(--radius) var(--radius) 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid var(--light);
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+
+        /* Chatbot */
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .chatbot-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .chatbot-window {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            width: 380px;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: none;
+            flex-direction: column;
+            max-height: 500px;
+        }
+
+        .chatbot-header {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 15px 20px;
+            border-radius: var(--radius) var(--radius) 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-messages {
+            padding: 20px;
+            flex: 1;
+            overflow-y: auto;
+            max-height: 350px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            display: flex;
+            gap: 10px;
+        }
+
+        .message.bot {
+            align-items: flex-start;
+        }
+
+        .message.user {
+            align-items: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--light);
+            color: var(--primary);
+            font-size: 1rem;
+        }
+
+        .message-content {
+            max-width: 70%;
+            padding: 12px 15px;
+            border-radius: 18px;
+        }
+
+        .message.bot .message-content {
+            background: var(--light);
+            color: var(--dark);
+            border-bottom-left-radius: 5px;
+        }
+
+        .message.user .message-content {
+            background: var(--primary);
+            color: var(--white);
+            border-bottom-right-radius: 5px;
+        }
+
+        .chatbot-input {
+            padding: 15px 20px;
+            border-top: 1px solid var(--light);
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+        }
+
+        .input-group button {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius);
+            padding: 12px 15px;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .analysis-dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .progress-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .welcome-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .chatbot-window {
+                width: 90vw;
+                right: -10vw;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h1>UTP Empleabilidad con IA</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="dashboard-ia.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                        <li><a href="bolsa-trabajo.html"><i class="fas fa-briefcase"></i> Bolsa de Trabajo</a></li>
+                        <li><a href="eventos.html"><i class="fas fa-calendar-alt"></i> Eventos</a></li>
+                        <li><a href="mi-cv.html"><i class="fas fa-file-alt"></i> Mi CV</a></li>
+                        
+                    </ul>
+                </nav>
+                <div class="user-actions">
+                
+                    <a href="perfil.html" class="btn btn-primary"><i class="fas fa-user"></i> Mi Perfil</a>
+		     <a href="login-utp.html" class="btn btn-primary"><i class="fas fa-close"></i> Cerrar Sesión</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <aside class="sidebar">
+                <ul class="sidebar-menu">
+                    <li><a href="dashboard-ia.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="bolsa-trabajo.html"><i class="fas fa-briefcase"></i> Bolsa de Trabajo</a></li>
+                    <li><a href="eventos.html"><i class="fas fa-calendar-alt"></i> Eventos</a></li>
+                    <li><a href="mi-cv.html"><i class="fas fa-file-alt"></i> Mi CV</a></li>
+                    <li><a href="empresas.html"><i class="fas fa-building"></i> Empresas</a></li>
+                    <li><a href="mentoria.html"><i class="fas fa-users"></i> Mentoría</a></li>
+                    <li><a href="estadisticas.html"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
+                </ul>
+            </aside>
+
+            <main class="dashboard-content">
+                <!-- Welcome Banner -->
+                <div class="welcome-banner">
+                    <div class="welcome-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="welcome-text">
+                        <h2>¡Bienvenido al Sistema Inteligente de Empleabilidad!</h2>
+                        <p>Tu asistente IA ha analizado tu perfil y tiene recomendaciones personalizadas para ti.</p>
+                    </div>
+                </div>
+
+                <!-- Progress Section -->
+                <div class="progress-section">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            <i class="fas fa-chart-line"></i> Progreso de Empleabilidad
+                            <span class="ia-badge">IA</span>
+                        </h3>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-main">
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" id="progress-bar" style="width: 75%"></div>
+                            </div>
+                            <div class="progress-info">
+                                <span><strong>75%</strong> completado</span>
+                                <span>¡Excelente progreso!</span>
+                            </div>
+                        </div>
+                        <div class="progress-stats">
+                            <div class="stat-item">
+                                <span>Match con el mercado:</span>
+                                <span class="stat-value">85%</span>
+                            </div>
+                            <div class="stat-item">
+                                <span>Nivel de empleabilidad:</span>
+                                <span class="stat-value">Avanzado</span>
+                            </div>
+                            <div class="stat-item">
+                                <span>Recomendaciones activas:</span>
+                                <span class="stat-value">12</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Recommendations -->
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <i class="fas fa-star"></i> Recomendaciones Personalizadas
+                        <span class="ia-badge">KNN IA</span>
+                    </h3>
+                </div>
+                <div class="cards-grid" id="recomendacionesContainer">
+                    <!-- Las recomendaciones se generan automáticamente con IA -->
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <i class="fas fa-bolt"></i> Accesos Rápidos
+                    </h3>
+                </div>
+                <div class="quick-actions">
+                    <a href="mi-cv.html" class="action-btn">
+                        <i class="fas fa-file-alt action-icon"></i>
+                        <span>Mi CV</span>
+                    </a>
+                    <a href="bolsa-trabajo.html" class="action-btn">
+                        <i class="fas fa-briefcase action-icon"></i>
+                        <span>Bolsa de Trabajo</span>
+                    </a>
+                    <a href="eventos.html" class="action-btn">
+                        <i class="fas fa-calendar-alt action-icon"></i>
+                        <span>Eventos</span>
+                    </a>
+                    <div class="action-btn" onclick="toggleChatbot()">
+                        <i class="fas fa-robot action-icon"></i>
+                        <span>Chatbot IA</span>
+                    </div>
+                </div>
+
+                <!-- Analysis Dashboard -->
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <i class="fas fa-chart-pie"></i> Dashboard de Inteligencia Artificial
+                        <span class="ia-badge">SISTEMA IA</span>
+                    </h3>
+                </div>
+                <div class="analysis-dashboard">
+                    <div class="analysis-section">
+                        <h4 class="card-title"><i class="fas fa-user-graduate"></i> Análisis de Tu Perfil</h4>
+                        <div class="mb-4">
+                            <p><strong>Carrera:</strong> Ingeniería de Sistemas</p>
+                            <p><strong>Ciclo:</strong> 9no</p>
+                            <p><strong>Habilidades principales:</strong> Python, SQL, Machine Learning</p>
+                        </div>
+                        
+                        <h5 class="mb-3">📊 Match con Áreas Laborales</h5>
+                        <div class="skills-list">
+                            <div class="skill-item">
+                                <div class="skill-header">
+                                    <span>Desarrollo Software</span>
+                                    <span>85%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-fill" style="width: 85%; background: var(--success);"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-header">
+                                    <span>Data Science</span>
+                                    <span>70%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-fill" style="width: 70%; background: var(--info);"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-header">
+                                    <span>Ciberseguridad</span>
+                                    <span>45%</span>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="skill-fill" style="width: 45%; background: var(--warning);"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="analysis-section">
+                        <h4 class="card-title"><i class="fas fa-bullseye"></i> Recomendaciones de la IA</h4>
+                        <div class="recommendations-list">
+                            <div class="recommendation-item">
+                                <i class="fas fa-rocket recommendation-icon"></i>
+                                <div>
+                                    <strong>Próximo paso:</strong> Postular a prácticas en IBM
+                                </div>
+                            </div>
+                            <div class="recommendation-item">
+                                <i class="fas fa-code recommendation-icon"></i>
+                                <div>
+                                    <strong>Fortalecer:</strong> Python avanzado y frameworks web
+                                </div>
+                            </div>
+                            <div class="recommendation-item">
+                                <i class="fas fa-certificate recommendation-icon"></i>
+                                <div>
+                                    <strong>Certificaciones:</strong> AWS, Google Cloud
+                                </div>
+                            </div>
+                            <div class="recommendation-item">
+                                <i class="fas fa-network-wired recommendation-icon"></i>
+                                <div>
+                                    <strong>Networking:</strong> Conectar con egresados en empresas tech
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button class="btn btn-primary" onclick="window.location.href='mi-cv.html'">
+                                <i class="fas fa-sync-alt"></i> Actualizar Mi Perfil
+                            </button>
+                            <button class="btn btn-outline" onclick="generarReporteIA()" style="border-color: var(--primary); color: var(--primary);">
+                                <i class="fas fa-download"></i> Descargar Reporte IA
+                            </button>
+                            <!-- Nuevo botón para Modal IA -->
+                            <button class="btn btn-primary" onclick="openIAModal()">
+                                <i class="fas fa-brain"></i> Ver Detalles IA
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal IA Detallado -->
+    <div id="iaModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-brain"></i> Dashboard de Inteligencia Artificial Detallado</h3>
+                <button class="btn btn-light" onclick="closeIAModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom: 25px;">
+                    <h4 style="color: var(--primary); margin-bottom: 15px;">🚀 Sistema de Recomendaciones Inteligentes</h4>
+                    <p>Este dashboard utiliza algoritmos de inteligencia artificial para analizar tu perfil y ofrecerte recomendaciones personalizadas.</p>
+                </div>
+
+                <!-- Sección de Algoritmos IA -->
+                <div style="margin-bottom: 25px;">
+                    <h5 style="color: var(--primary); margin-bottom: 10px;">🤖 Algoritmos IA Implementados</h5>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px;">
+                        <div style="background: var(--light); padding: 15px; border-radius: var(--radius);">
+                            <strong>K-Nearest Neighbors</strong>
+                            <p style="font-size: 0.9em; margin-top: 5px;">Recomendaciones basadas en similitud con perfiles exitosos</p>
+                        </div>
+                        <div style="background: var(--light); padding: 15px; border-radius: var(--radius);">
+                            <strong>Análisis de Match</strong>
+                            <p style="font-size: 0.9em; margin-top: 5px;">Comparación con requisitos de empleo en tiempo real</p>
+                        </div>
+                        <div style="background: var(--light); padding: 15px; border-radius: var(--radius);">
+                            <strong>Predicción de Empleabilidad</strong>
+                            <p style="font-size: 0.9em; margin-top: 5px;">Estimación de probabilidades de éxito laboral</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Análisis Detallado -->
+                <div style="margin-bottom: 25px;">
+                    <h5 style="color: var(--primary); margin-bottom: 15px;">📊 Análisis Detallado de Tu Perfil</h5>
+                    
+                    <!-- Carrera y Ciclo -->
+                    <div style="background: var(--light); padding: 15px; border-radius: var(--radius); margin-bottom: 15px;">
+                        <strong style="color: var(--primary);">🎓 Carrera y Nivel Académico</strong>
+                        <div style="margin-top: 10px;">
+                            <p><strong>Carrera:</strong> Ingeniería de Sistemas</p>
+                            <p><strong>Ciclo Actual:</strong> 9no ciclo</p>
+                            <p><strong>Promedio Ponderado:</strong> 16.2</p>
+                            <div style="background: #e0e0e0; height: 8px; border-radius: 4px; margin-top: 5px;">
+                                <div style="background: var(--success); height: 100%; width: 16.2%; border-radius: 4px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Habilidades Técnicas -->
+                    <div style="background: var(--light); padding: 15px; border-radius: var(--radius); margin-bottom: 15px;">
+                        <strong style="color: var(--primary);">💻 Habilidades Técnicas</strong>
+                        <div style="margin-top: 10px;">
+                            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                                <span style="background: var(--primary); color: white; padding: 5px 10px; border-radius: 15px;">Python</span>
+                                <span style="background: var(--primary); color: white; padding: 5px 10px; border-radius: 15px;">SQL</span>
+                                <span style="background: var(--info); color: white; padding: 5px 10px; border-radius: 15px;">Machine Learning</span>
+                                <span style="background: var(--primary); color: white; padding: 5px 10px; border-radius: 15px;">Git</span>
+                                <span style="background: var(--primary); color: white; padding: 5px 10px; border-radius: 15px;">Java</span>
+                                <span style="background: var(--info); color: white; padding: 5px 10px; border-radius: 15px;">Docker</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Análisis de Match con el Mercado -->
+                    <div style="background: var(--light); padding: 15px; border-radius: var(--radius);">
+                        <strong style="color: var(--primary);">📈 Análisis de Match con el Mercado Laboral</strong>
+                        <div style="margin-top: 10px;">
+                            <p><strong>Match General:</strong> 85%</p>
+                            <div style="background: #e0e0e0; height: 10px; border-radius: 5px; margin: 10px 0;">
+                                <div style="background: var(--success); height: 100%; width: 85%; border-radius: 5px;"></div>
+                            </div>
+                            
+                            <p><strong>Match por Área:</strong></p>
+                            <ul style="margin-left: 20px;">
+                                <li>Desarrollo de Software: 92%</li>
+                                <li>Data Science: 78%</li>
+                                <li>Ciberseguridad: 45%</li>
+                                <li>DevOps: 60%</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recomendaciones de la IA -->
+                <div>
+                    <h5 style="color: var(--primary); margin-bottom: 15px;">🎯 Recomendaciones Específicas de la IA</h5>
+                    
+                    <div style="background: linear-gradient(135deg, #f5f7fb, #e3e8f0); padding: 20px; border-radius: var(--radius);">
+                        <div style="margin-bottom: 15px;">
+                            <strong>👔 Para Mejorar Tu Empleabilidad:</strong>
+                            <ul style="margin-left: 20px; margin-top: 5px;">
+                                <li>Completar certificación en AWS Cloud Practitioner</li>
+                                <li>Participar en hackathons o proyectos open source</li>
+                                <li>Desarrollar un proyecto personal en Machine Learning</li>
+                                <li>Mejorar habilidades en inglés técnico</li>
+                            </ul>
+                        </div>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <strong>💼 Próximos Pasos Recomendados:</strong>
+                            <ul style="margin-left: 20px; margin-top: 5px;">
+                                <li>Postular a prácticas profesionales en IBM (92% match)</li>
+                                <li>Asistir al taller de entrevistas técnicas el 15 de mayo</li>
+                                <li>Actualizar tu CV destacando proyectos en Python</li>
+                                <li>Conectar con 5 egresados en LinkedIn de empresas tech</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <strong>📚 Formación Complementaria:</strong>
+                            <ul style="margin-left: 20px; margin-top: 5px;">
+                                <li>Curso de Docker y Kubernetes (Platzi)</li>
+                                <li>Especialización en Data Science (Coursera)</li>
+                                <li>Taller de entrevistas técnicas (UTP Empleabilidad)</li>
+                                <li>Certificación Scrum Master</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" onclick="closeIAModal()">Cerrar</button>
+                <button class="btn btn-primary" onclick="generarReporteIA()">
+                    <i class="fas fa-download"></i> Descargar Reporte
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot IA -->
+    <div class="chatbot-container">
+        <button class="chatbot-btn" onclick="toggleChatbot()">
+            <i class="fas fa-robot"></i>
+        </button>
+        
+        <div class="chatbot-window" id="chatbotWindow">
+            <div class="chatbot-header">
+                <div>
+                    <i class="fas fa-robot"></i>
+                    <strong> Asistente IA UTP</strong>
+                    <span class="ia-badge">EN VIVO</span>
+                </div>
+                <button class="btn btn-sm btn-light" onclick="toggleChatbot()">×</button>
+            </div>
+            <div class="chatbot-messages" id="chatbotMessages">
+                <div class="message bot">
+                    <div class="message-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="message-content">
+                        <strong>UTP Bot:</strong><br>
+                        ¡Hola Mario! 👋 Soy tu asistente de IA para empleabilidad.<br><br>
+                        Puedo ayudarte con:<br>
+                        • 📊 Recomendaciones de empleo personalizadas<br>
+                        • 💼 Preparación para entrevistas<br>
+                        • 📝 Análisis de tu CV<br>
+                        • 🎯 Información sobre talleres<br><br>
+                        ¿En qué puedo asistirte hoy?
+                    </div>
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <div class="input-group">
+                    <input type="text" placeholder="Escribe tu pregunta..." id="chatInput">
+                    <button onclick="sendMessage()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // ============================================
+        // 1. CONFIGURACIÓN INICIAL Y DATOS
+        // ============================================
+
+        // Perfil del estudiante (simulado - conectado con mi-cv.html)
+        const perfilEstudiante = {
+            nombre: "Mario Ivan Aponte Matos",
+            carrera: "Ingeniería de Sistemas",
+            ciclo: 9,
+            promedio: 16.2,
+            habilidades: ["Python", "SQL", "Machine Learning", "Git", "Java", "Docker"],
+            intereses: ["Desarrollo Software", "Data Science", "Cloud Computing", "IA"],
+            experiencia: ["Proyectos académicos", "Asistente de TI UTP"],
+            ubicacionPreferida: "Lima",
+            participacionTalleres: 4,
+            tieneExperienciaPractica: true
+        };
+
+        // Base de datos de empleos (conectada con bolsa-trabajo.html)
+        const baseEmpleos = [
+            {
+                id: 1,
+                empresa: "IBM",
+                puesto: "Prácticas en Desarrollo de Software",
+                habilidades: ["Python", "Java", "SQL", "Git", "Spring Boot"],
+                experiencia: "Estudiantes últimos ciclos",
+                salario: 1800,
+                tipo: "Práctica",
+                ubicacion: "Lima",
+                match: 92,
+                descripcion: "Programa de prácticas para desarrollo de soluciones empresariales"
+            },
+            {
+                id: 2,
+                empresa: "Manpower",
+                puesto: "Analista Junior de Datos",
+                habilidades: ["SQL", "Power BI", "Python", "Excel", "Análisis Estadístico"],
+                experiencia: "Recién egresados",
+                salario: 2500,
+                tipo: "Tiempo completo",
+                ubicacion: "Lima",
+                match: 78,
+                descripcion: "Análisis de datos para optimización de procesos empresariales"
+            },
+            {
+                id: 3,
+                empresa: "Inkafarma",
+                puesto: "Analista de Datos Jr",
+                habilidades: ["Python", "SQL", "Machine Learning", "Pandas", "Scikit-learn"],
+                experiencia: "Estudiantes 7mo+ ciclo",
+                salario: 2800,
+                tipo: "Tiempo completo", 
+                ubicacion: "Lima",
+                match: 85,
+                descripcion: "Trabajo con datos de ventas y logística para predicciones"
+            }
+        ];
+
+        // ============================================
+        // 2. ALGORITMO KNN - RECOMENDACIONES INTELIGENTES
+        // ============================================
+
+        function calcularSimilitudKNN(perfil, empleo) {
+            let puntaje = 0;
+            let maxPuntaje = 0;
+            
+            // 1. Coincidencia de habilidades (40% del peso)
+            const habilidadesComunes = perfil.habilidades.filter(h => 
+                empleo.habilidades.includes(h)
+            ).length;
+            const matchHabilidades = habilidadesComunes / Math.max(
+                perfil.habilidades.length, 
+                empleo.habilidades.length
+            );
+            puntaje += matchHabilidades * 0.4;
+            maxPuntaje += 0.4;
+            
+            // 2. Nivel de experiencia (25% del peso)
+            let experienciaMatch = 0;
+            if (empleo.experiencia.includes("últimos ciclos") && perfil.ciclo >= 8) experienciaMatch = 1;
+            else if (empleo.experiencia.includes("7mo") && perfil.ciclo >= 7) experienciaMatch = 0.8;
+            else if (empleo.experiencia.includes("6mo") && perfil.ciclo >= 6) experienciaMatch = 0.6;
+            else if (empleo.experiencia.includes("egresados") && perfil.ciclo >= 10) experienciaMatch = 1;
+            puntaje += experienciaMatch * 0.25;
+            maxPuntaje += 0.25;
+            
+            // 3. Ubicación (15% del peso)
+            const matchUbicacion = (perfil.ubicacionPreferida === empleo.ubicacion || empleo.ubicacion === "Remoto") ? 1 : 0.3;
+            puntaje += matchUbicacion * 0.15;
+            maxPuntaje += 0.15;
+            
+            // 4. Tipo de trabajo (10% del peso)
+            const tipoPreferido = perfil.ciclo >= 8 ? 1 : 0.7; // Prácticas para ciclos avanzados
+            puntaje += tipoPreferido * 0.1;
+            maxPuntaje += 0.1;
+            
+            // 5. Intereses (10% del peso)
+            const interesesCoincidentes = perfil.intereses.some(interes => 
+                empleo.puesto.toLowerCase().includes(interes.toLowerCase()) ||
+                empleo.habilidades.some(h => 
+                    interes.toLowerCase().includes(h.toLowerCase())
+                )
+            ) ? 1 : 0;
+            puntaje += interesesCoincidentes * 0.1;
+            maxPuntaje += 0.1;
+            
+            return Math.round((puntaje / maxPuntaje) * 100);
+        }
+
+        function knnRecomendaciones(k = 3) {
+            console.log("🔍 Ejecutando algoritmo KNN para recomendaciones...");
+            
+            const empleosConSimilitud = baseEmpleos.map(empleo => ({
+                ...empleo,
+                similitud: calcularSimilitudKNN(perfilEstudiante, empleo)
+            }));
+            
+            const recomendaciones = empleosConSimilitud
+                .sort((a, b) => b.similitud - a.similitud)
+                .slice(0, k);
+            
+            console.log("✅ Recomendaciones KNN generadas:", recomendaciones);
+            return recomendaciones;
+        }
+
+        // ============================================
+        // 3. FUNCIONES DE VISUALIZACIÓN
+        // ============================================
+
+        function mostrarRecomendacionesKNN() {
+            const recomendaciones = knnRecomendaciones(3);
+            const container = document.getElementById('recomendacionesContainer');
+            
+            container.innerHTML = recomendaciones.map(emp => `
+                <div class="card recommendation-card">
+                    <div class="card-header">
+                        <h4 class="card-title">${emp.empresa}</h4>
+                        <span class="match-badge">${emp.similitud}% match</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-2"><strong>${emp.puesto}</strong></p>
+                        <p class="mb-2">💼 ${emp.tipo} | 📍 ${emp.ubicacion}</p>
+                        <p class="mb-3">💰 S/ ${emp.salario}</p>
+                        <small class="d-block mb-3">
+                            <strong>Habilidades:</strong> ${emp.habilidades.slice(0, 3).join(', ')}
+                        </small>
+                        <button class="btn btn-light btn-sm w-100" onclick="window.location.href='bolsa-trabajo.html'">
+                            <i class="fas fa-briefcase"></i> Ver Detalles
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function generarReporteIA() {
+            const recomendaciones = knnRecomendaciones(5);
+            
+            const reporte = `
+REPORTE DE INTELIGENCIA ARTIFICIAL - EMPLEABILIDAD UTP
+===================================================
+
+PERFIL DEL ESTUDIANTE:
+• Nombre: ${perfilEstudiante.nombre}
+• Carrera: ${perfilEstudiante.carrera}
+• Ciclo: ${perfilEstudiante.ciclo}
+• Promedio: ${perfilEstudiante.promedio}
+
+TOP 3 RECOMENDACIONES:
+${recomendaciones.map((emp, i) => `
+${i + 1}. ${emp.empresa} - ${emp.puesto}
+   • Match: ${emp.similitud}%
+   • Salario: S/ ${emp.salario}
+   • Tipo: ${emp.tipo}
+   • Ubicación: ${emp.ubicacion}
+`).join('')}
+
+ANÁLISIS DETALLADO:
+• Habilidades principales: ${perfilEstudiante.habilidades.slice(0, 3).join(', ')}
+• Áreas de interés: ${perfilEstudiante.intereses.join(', ')}
+• Match promedio con el mercado: 85%
+• Nivel de empleabilidad: Avanzado
+• Participación en talleres: ${perfilEstudiante.participacionTalleres}
+
+RECOMENDACIONES DE LA IA:
+1. Fortalecer habilidades en ${perfilEstudiante.habilidades[0]} avanzado
+2. Obtener certificación en Cloud Computing
+3. Participar en proyectos prácticos relacionados con ${perfilEstudiante.intereses[0]}
+4. Asistir a eventos de networking de la industria
+5. Prepararse para entrevistas técnicas
+
+Generado automáticamente por el Sistema IA UTP - ${new Date().toLocaleDateString()}
+            `;
+            
+            // Simular descarga
+            const blob = new Blob([reporte], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `reporte-ia-${perfilEstudiante.nombre.split(' ')[0]}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            alert('📄 Reporte de IA descargado exitosamente');
+        }
+
+        // ============================================
+        // 4. FUNCIONALIDAD DEL MODAL
+        // ============================================
+
+        function openIAModal() {
+            document.getElementById('iaModal').style.display = 'flex';
+        }
+
+        function closeIAModal() {
+            document.getElementById('iaModal').style.display = 'none';
+        }
+
+        // Cerrar modal al hacer clic fuera del contenido
+        window.onclick = function(event) {
+            const modal = document.getElementById('iaModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // ============================================
+        // 5. CHATBOT INTELIGENTE MEJORADO
+        // ============================================
+
+        function toggleChatbot() {
+            const chatbot = document.getElementById('chatbotWindow');
+            if (chatbot.style.display === 'flex') {
+                chatbot.style.display = 'none';
+            } else {
+                chatbot.style.display = 'flex';
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            const chatBody = document.getElementById('chatbotMessages');
+            
+            if (message) {
+                // Mensaje del usuario
+                const userMsg = document.createElement('div');
+                userMsg.className = 'message user';
+                userMsg.innerHTML = `
+                    <div class="message-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="message-content">
+                        ${message}
+                    </div>
+                `;
+                chatBody.appendChild(userMsg);
+                
+                // Respuesta IA
+                setTimeout(() => {
+                    const botResponse = generarRespuestaIA(message.toLowerCase());
+                    const botMsg = document.createElement('div');
+                    botMsg.className = 'message bot';
+                    botMsg.innerHTML = `
+                        <div class="message-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            <strong>UTP Bot:</strong><br>
+                            ${botResponse}
+                        </div>
+                    `;
+                    chatBody.appendChild(botMsg);
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                }, 1000);
+                
+                input.value = '';
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }
+        }
+
+        function generarRespuestaIA(mensaje) {
+            if (mensaje.includes('práctica') || mensaje.includes('practica') || mensaje.includes('internship')) {
+                const practicas = baseEmpleos.filter(e => e.tipo === 'Práctica')
+                    .sort((a, b) => b.similitud - a.similitud)
+                    .slice(0, 3);
+                
+                return `🔍 Encontré ${practicas.length} prácticas ideales para ti:\n\n` +
+                       practicas.map(p => 
+                           `🏢 ${p.empresa}\n` +
+                           `💼 ${p.puesto}\n` +
+                           `🎯 ${p.similitud}% match | 💰 S/ ${p.salario}\n` +
+                           `📍 ${p.ubicacion}\n`
+                       ).join('\n') +
+                       `\n¿Quieres ver más detalles de alguna?`;
+                
+            } else if (mensaje.includes('entrevista')) {
+                return `🎯 Basado en tu perfil de ${perfilEstudiante.carrera}, te recomiendo:\n\n` +
+                       `📝 Prepárate en:\n` +
+                       `• Preguntas técnicas de ${perfilEstudiante.habilidades.slice(0, 2).join(' y ')}\n` +
+                       `• Algoritmos y estructuras de datos\n` +
+                       `• Casos prácticos de desarrollo\n\n` +
+                       `💼 Comportamiento:\n` +
+                       `• Proyectos en ${perfilEstudiante.habilidades[0]}\n` +
+                       `• Trabajo en equipo y liderazgo\n\n` +
+                       `¿Quieres que simule una entrevista?`;
+                
+            } else if (mensaje.includes('salario') || mensaje.includes('sueldo')) {
+                const salarioPromedio = Math.round(baseEmpleos.reduce((sum, e) => sum + e.salario, 0) / baseEmpleos.length);
+                return `💰 Para tu perfil (${perfilEstudiante.carrera}, ciclo ${perfilEstudiante.ciclo}):\n\n` +
+                       `📊 Rango salarial esperado:\n` +
+                       `• Prácticas: S/ 1,500 - 2,200\n` +
+                       `• Junior: S/ 2,500 - 3,800\n` +
+                       `• Promedio mercado: S/ ${salarioPromedio}\n\n` +
+                       `🎯 Tus habilidades ${perfilEstudiante.habilidades[0]} y ${perfilEstudiante.habilidades[1]} tienen alta demanda.`;
+                
+            } else if (mensaje.includes('cv') || mensaje.includes('currículum')) {
+                return `📋 Análisis de tu CV (basado en tu perfil):\n\n` +
+                       `✅ Fortalezas:\n` +
+                       `• ${perfilEstudiante.habilidades.slice(0, 3).join(', ')}\n` +
+                       `• ${perfilEstudiante.ciclo}° ciclo ${perfilEstudiante.carrera}\n\n` +
+                       `💡 Recomendaciones:\n` +
+                       `• Destaca proyectos en ${perfilEstudiante.habilidades[0]}\n` +
+                       `• Incluye certificaciones relevantes\n` +
+                       `• Métricas y resultados cuantificables\n\n` +
+                       `¿Necesitas ayuda con algún aspecto específico?`;
+                
+            } else if (mensaje.includes('modal') || mensaje.includes('dashboard detallado')) {
+                openIAModal();
+                return `📊 He abierto el dashboard detallado de IA para ti. Ahí podrás ver:\n\n` +
+                       `• Análisis completo de tu perfil\n` +
+                       `• Detalles de los algoritmos IA utilizados\n` +
+                       `• Recomendaciones específicas para tu desarrollo\n` +
+                       `• Match detallado con áreas laborales`;
+                
+            } else {
+                return `🤖 Entiendo que preguntas sobre "${mensaje}".\n\n` +
+                       `Como tu asistente de IA, puedo ayudarte con:\n\n` +
+                       `📊 Recomendaciones de empleo personalizadas\n` +
+                       `💼 Preparación para entrevistas\n` +
+                       `📝 Análisis de CV y perfil\n` +
+                       `🎯 Información sobre talleres\n` +
+                       `💰 Orientación salarial\n` +
+                       `🚀 Desarrollo de habilidades\n\n` +
+                       `¿En qué específicamente puedo asistirte?`;
+            }
+        }
+
+        // ============================================
+        // 6. INICIALIZACIÓN AL CARGAR LA PÁGINA
+        // ============================================
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Inicializando Sistema IA UTP...');
+            
+            // Mostrar recomendaciones KNN
+            mostrarRecomendacionesKNN();
+            
+            // Animar barra de progreso
+            setTimeout(() => {
+                document.getElementById('progress-bar').style.width = '75%';
+            }, 500);
+            
+            console.log('✅ Sistema IA inicializado correctamente');
+        });
+
+        // Soporte para Enter key en chatbot
+        document.getElementById('chatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
